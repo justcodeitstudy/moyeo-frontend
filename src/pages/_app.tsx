@@ -9,6 +9,8 @@ import {
 import type { AppProps } from "next/app";
 import { NextPageContext } from "next/types";
 import { useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle, Theme } from "jci-moyeo-design-system";
 
 type PageProps = {
   dehydratedState?: DehydratedState;
@@ -31,13 +33,16 @@ function MoyeoApp({ Component, pageProps }: ExtendedAppProps<PageProps>) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <RecoilRoot>
-          <Component {...pageProps} />
-        </RecoilRoot>
-      </Hydrate>
-    </QueryClientProvider>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyle />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <RecoilRoot>
+            <Component {...pageProps} />
+          </RecoilRoot>
+        </Hydrate>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
