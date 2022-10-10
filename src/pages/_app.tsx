@@ -1,20 +1,21 @@
-import { RecoilRoot } from 'recoil';
+import React from "react";
+import { RecoilRoot } from "recoil";
 import {
   DehydratedState,
   Hydrate,
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query';
-import type { AppProps } from 'next/app';
-import { NextPageContext } from 'next/types';
-import { useState } from 'react';
+} from "@tanstack/react-query";
+import type { AppProps } from "next/app";
+import { NextPageContext } from "next/types";
+import { useState } from "react";
 
 type PageProps = {
   dehydratedState?: DehydratedState;
 };
 
-type ExtendedAppProps<P = {}> = {
-  err?: NextPageContext['err'];
+type ExtendedAppProps<P = unknown> = {
+  err?: NextPageContext["err"];
 } & AppProps<P>;
 
 function MoyeoApp({ Component, pageProps }: ExtendedAppProps<PageProps>) {
@@ -26,7 +27,7 @@ function MoyeoApp({ Component, pageProps }: ExtendedAppProps<PageProps>) {
             staleTime: 60 * 1000,
           },
         },
-      })
+      }),
   );
 
   return (
