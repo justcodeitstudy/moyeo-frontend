@@ -7,20 +7,26 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
-import { NextPageContext } from "next/types";
+import { NextPage, NextPageContext } from "next/types";
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, Theme } from "jci-moyeo-design-system";
 
-type PageProps = {
-  dehydratedState?: DehydratedState;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  // eslint-disable-next-line no-unused-vars
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
-type ExtendedAppProps<P = unknown> = {
+type AppPropsWithLayout = {
   err?: NextPageContext["err"];
-} & AppProps<P>;
+} & AppProps<{
+  dehydratedState?: DehydratedState;
+}> & {
+    Component: NextPageWithLayout;
+  };
 
-function MoyeoApp({ Component, pageProps }: ExtendedAppProps<PageProps>) {
+function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -32,17 +38,20 @@ function MoyeoApp({ Component, pageProps }: ExtendedAppProps<PageProps>) {
       }),
   );
 
-  return (
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
+            {/* TODO: type error */}
             <Component {...pageProps} />
           </RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
-    </ThemeProvider>
+    </ThemeProvider>,
   );
 }
 
