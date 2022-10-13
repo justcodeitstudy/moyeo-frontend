@@ -11,14 +11,13 @@ export default function MainLayout({
       <Header />
       <Carousel />
       <MainLayoutRootContainer>
-        <LayoutMainContainer>{children}</LayoutMainContainer>
+        <MainLayoutContent>{children}</MainLayoutContent>
       </MainLayoutRootContainer>
     </>
   );
 }
 
 const MainLayoutRootContainer = styled("div")`
-  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
@@ -33,7 +32,8 @@ const Carousel = styled("div")`
   background-color: blue;
 `;
 
-const LayoutMainContainer = styled("main")`
+const MainLayoutContent = styled("main")`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

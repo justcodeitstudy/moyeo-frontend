@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageWithLayout } from "./_app";
 import { IndexPageComponent } from "components/IndexPageComponent";
-import MainLayout from "layouts/HeaderLayout";
+import MainLayout from "layouts/MainLayout";
 
 const Index: NextPageWithLayout = () => {
   return <IndexPageComponent />;

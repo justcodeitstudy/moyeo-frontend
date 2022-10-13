@@ -9,23 +9,20 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <DefaultLayoutContainer>
       <Header />
-      <DefaultLayoutMain>{children}</DefaultLayoutMain>
+      <DefaultLayoutContent>{children}</DefaultLayoutContent>
     </DefaultLayoutContainer>
   );
 };
 
-const DefaultLayoutContainer = styled("div")`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
+const DefaultLayoutContainer = styled("div")``;
 
 const Header = styled("header")`
   height: 72px;
   background-color: green;
 `;
 
-const DefaultLayoutMain = styled("main")`
+const DefaultLayoutContent = styled("main")`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
