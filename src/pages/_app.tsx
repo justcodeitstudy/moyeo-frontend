@@ -27,6 +27,7 @@ type AppPropsWithLayout = {
   };
 
 function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
+  const { dehydratedState, ...rest } = pageProps;
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -44,10 +45,9 @@ function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={dehydratedState}>
           <RecoilRoot>
-            {/* TODO: type error */}
-            <Component {...pageProps} />
+            <Component {...rest} />
           </RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
