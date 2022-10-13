@@ -39,5 +39,5 @@ const MainLayoutContent = styled("main")`
   justify-content: center;
   align-items: center;
   background-color: salmon;
-  margin: 0 242px;
+  margin: 0 120px;
 `;
