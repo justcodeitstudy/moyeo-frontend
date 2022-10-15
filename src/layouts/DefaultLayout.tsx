@@ -18,7 +18,6 @@ const DefaultLayoutContainer = styled("div")``;
 
 const Header = styled("header")`
   height: 72px;
-  background-color: green;
 `;
 
 const DefaultLayoutContent = styled("main")`
@@ -27,6 +26,5 @@ const DefaultLayoutContent = styled("main")`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: salmon;
   margin: 0 120px;
 `;

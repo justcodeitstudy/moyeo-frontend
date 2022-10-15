@@ -29,7 +29,6 @@ const Header = styled("header")`
 
 const Carousel = styled("div")`
   height: 272px;
-  background-color: blue;
 `;
 
 const MainLayoutContent = styled("main")`
@@ -38,6 +37,5 @@ const MainLayoutContent = styled("main")`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: salmon;
   margin: 0 120px;
 `;
