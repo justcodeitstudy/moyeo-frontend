@@ -1,13 +1,14 @@
 import React from "react";
-import { NextPage } from "next";
-import { Card } from "jci-moyeo-design-system";
+import { NextPageWithLayout } from "./_app";
+import { IndexPageComponent } from "components/IndexPageComponent";
+import MainLayout from "layouts/MainLayout";
 
-const Home: NextPage = () => {
-  return (
-    <div>
-      <Card>Test</Card>
-    </div>
-  );
+const Index: NextPageWithLayout = () => {
+  return <IndexPageComponent />;
 };
 
-export default Home;
+Index.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
+};
+
+export default Index;
