@@ -14,7 +14,10 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   );
 };
 
-const DefaultLayoutContainer = styled("div")``;
+const DefaultLayoutContainer = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
+`;
 
 const Header = styled("header")`
   height: 72px;
