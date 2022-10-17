@@ -16,7 +16,7 @@ const Editor = () => {
     ["table", "link"],
     ["code", "codeblock"],
   ];
-  console.log("Recruitment");
+
   return (
     <TuiEditor
       ref={editorRef}
