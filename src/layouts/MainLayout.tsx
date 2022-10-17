@@ -18,13 +18,12 @@ export default function MainLayout({
 }
 
 const MainLayoutRootContainer = styled("div")`
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const Header = styled("header")`
   height: 72px;
-  background-color: green;
 `;
 
 const Carousel = styled("div")`
@@ -32,10 +31,15 @@ const Carousel = styled("div")`
 `;
 
 const MainLayoutContent = styled("main")`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 120px;
+  width: 1168px;
+  margin: 0 auto;
+
+  @media (max-width: 1199px) {
+    width: 736px;
+  }
+
+  @media (max-width: 767px) {
+    width: auto;
+    margin: 0 16px;
+  }
 `;
