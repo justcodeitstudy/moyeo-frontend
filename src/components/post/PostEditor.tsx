@@ -23,7 +23,7 @@ const PostEditor: NextPageWithLayout = () => {
     <PageContainer>
       <Banner />
       <Information>
-        <Title>모집 기본정보 입력</Title>
+        <BasicTitle>모집 기본정보 입력</BasicTitle>
         <GridContainer>
           <GridItem>
             <TextInput width="100%" label="모집 구분" />
@@ -47,7 +47,7 @@ const PostEditor: NextPageWithLayout = () => {
         </GridContainer>
       </Information>
       <Introduction>
-        <Title>모집 소개 작성</Title>
+        <IntroductionTitle>모집 소개 작성</IntroductionTitle>
         <TitleTextInput width="100%" placeholder="모집 제목을 입력해주세요." />
         <Editor />
       </Introduction>
@@ -71,11 +71,12 @@ const PageContainer = styled.div`
   margin: 56px 0;
 `;
 
-const Title = styled.h2`
+const BasicTitle = styled.h2`
   margin-bottom: 20px;
   ${({ theme }) => theme.typography.header2};
 
   @media (max-width: 767px) {
+    margin-bottom: 14px;
     ${({ theme }) => theme.typography.header3};
   }
 `;
@@ -105,6 +106,16 @@ const GridItem = styled.div`
 
 const Introduction = styled.div`
   margin-top: 72px;
+`;
+
+const IntroductionTitle = styled.h2`
+  margin-bottom: 20px;
+  ${({ theme }) => theme.typography.header2};
+
+  @media (max-width: 767px) {
+    margin-bottom: 12px;
+    ${({ theme }) => theme.typography.header3};
+  }
 `;
 
 const TitleTextInput = styled(TextInput)`
