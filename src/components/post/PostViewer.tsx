@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import styled, { css } from "styled-components";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
-import { Icon } from "jci-moyeo-design-system";
+import PostButton from "./PostButton";
 
 const Viewer = dynamic(() => import("./Viewer"), {
   ssr: false,
@@ -24,15 +24,9 @@ const PostViewer: NextPageWithLayout = () => {
         <TitleContainer>
           <Title>온라인 모각코 인원 모집합니다!</Title>
           <ButtonContainer>
-            <Button>
-              <Icon name="checkInCircle" />
-            </Button>
-            <Button>
-              <Icon name="write" />
-            </Button>
-            <Button>
-              <Icon name="delete" />
-            </Button>
+            <PostButton name="checkInCircle" checked={true} />
+            <PostButton name="write" />
+            <PostButton name="delete" />
           </ButtonContainer>
         </TitleContainer>
         <SubTitleContainer>
@@ -148,19 +142,6 @@ const ButtonContainer = styled.div`
   @media (max-width: 767px) {
     justify-content: flex-end;
   }
-`;
-
-const Button = styled.button`
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 8px;
-  color: ${({ theme }) => theme.colors.general["600"]};
-  background-color: ${({ theme }) => theme.colors.general["200"]};
-  cursor: pointer;
 `;
 
 const SubTitleContainer = styled.div`
