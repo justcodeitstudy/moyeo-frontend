@@ -24,7 +24,7 @@ const Editor = () => {
       previewHighlight={true}
       initialEditType="wysiwyg"
       initialValue=" "
-      height="500px"
+      height="337px"
       language="ko-KR"
       toolbarItems={toolbarItems}
       usageStatistics={false}
