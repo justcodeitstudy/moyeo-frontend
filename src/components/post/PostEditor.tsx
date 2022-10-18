@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
-import Banner from "components/Banner";
+import Banner from "components/post/Banner";
 import { Button, TextInput } from "jci-moyeo-design-system";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
