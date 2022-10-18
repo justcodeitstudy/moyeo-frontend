@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Banner = () => {
   return (
-    <Wrapper>
+    <Container>
       <Title>
         <TitleText>함께할 팀원 여기 다 모여!</TitleText>
       </Title>
@@ -13,15 +13,19 @@ const Banner = () => {
           모아보세요.
         </ContentText>
       </Content>
-    </Wrapper>
+    </Container>
   );
 };
 
 export default Banner;
 
-const Wrapper = styled.div`
+const Container = styled.div`
   padding: 28px 40px;
   background-color: ${({ theme }) => theme.colors.primary[50]};
+
+  @media (max-width: 767px) {
+    padding: 20px 12px;
+  }
 `;
 
 const Title = styled.div`
@@ -29,8 +33,12 @@ const Title = styled.div`
 `;
 
 const TitleText = styled.h2`
-  ${({ theme }) => theme.typography.header2};
   color: black;
+  ${({ theme }) => theme.typography.header2};
+
+  @media (max-width: 767px) {
+    ${({ theme }) => theme.typography.header3};
+  }
 `;
 
 const Content = styled.div``;
