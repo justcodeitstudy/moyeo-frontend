@@ -31,7 +31,7 @@ const StyledCardTitle = styled("header")`
   ${({ theme }) => theme.typography.header3};
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
   height: 56px;
 `;
 
