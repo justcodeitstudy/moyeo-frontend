@@ -1,20 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, GridItem } from "components/common/Grid";
-import { TextInput } from "jci-moyeo-design-system";
+import { Grid } from "components/common/Grid";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
+import { TextInput } from "jci-moyeo-design-system";
 
 const GridPage: NextPageWithLayout = () => {
   return (
     <PageContainer>
       <StyledGrid>
-        <GridItem>
+        <Grid.Item>
           <TextInput width="100%" />
-        </GridItem>
-        <GridItem>
+        </Grid.Item>
+        <Grid.Item>
           <TextInput width="100%" />
-        </GridItem>
+        </Grid.Item>
+        <Grid.Item>
+          <TextInput width="100%" />
+        </Grid.Item>
+        <Grid.Item>
+          <TextInput width="100%" />
+        </Grid.Item>
       </StyledGrid>
     </PageContainer>
   );
