@@ -15,10 +15,10 @@ Grid.Item = GridItem;
 export default Grid;
 
 const StyledGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 `;
