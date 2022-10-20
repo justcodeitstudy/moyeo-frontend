@@ -76,10 +76,12 @@ const ItemContainer = styled.div`
   display: flex !important;
   position: relative;
   width: 100%;
+  height: 252px;
   align-items: center;
   justify-content: space-between;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md}px`}) {
+    height: 152px;
     padding: 0 16px;
   }
 `;
