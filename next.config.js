@@ -9,6 +9,13 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    domains: [
+      "lh3.googleusercontent.com",
+      "k.kakaocdn.net",
+      "avatars.githubusercontent.com",
+    ],
+  },
 };
 
 module.exports = nextConfig;
