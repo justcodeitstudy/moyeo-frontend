@@ -32,7 +32,6 @@ const Carousel = styled("div")`
 const MainLayoutContent = styled("main")`
   width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
   margin: 0 auto;
-  background-color: silver;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.xl - 1}px`}) {
     width: ${({ theme }) => `${theme.breakpoints.md - 16 * 2}px`};
