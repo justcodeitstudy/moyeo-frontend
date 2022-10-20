@@ -13,16 +13,24 @@ const SkillItem = ({ name, src }: SkillItemProps) => {
     <Tooltip
       content={name}
       // eslint-disable-next-line react/no-children-prop
-      children={<StyledImage src={src} alt={name} width="36px" height="36px" />}
+      children={
+        <ImageWrapper>
+          <Image src={src} alt={name} width="30px" height="30px" />
+        </ImageWrapper>
+      }
     />
   );
 };
 
 export default SkillItem;
 
-const StyledImage = styled(Image)`
+const ImageWrapper = styled.div`
   width: 36px;
   height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors.general[300]};
   border-radius: 50%;
+  overflow: hidden;
 `;
