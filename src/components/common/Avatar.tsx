@@ -12,7 +12,14 @@ const Avatar = ({ id, src = "/moyomi_profile.svg" }: AvatarProps) => {
   return (
     <Link href={`/profile/${id}`} passHref>
       <AvatarLink>
-        <Image alt="avatar" src={src} width="36px" height="36px" />
+        <Image
+          role="img"
+          aria-label="avatar"
+          alt="avatar"
+          src={src}
+          width="36px"
+          height="36px"
+        />
       </AvatarLink>
     </Link>
   );
