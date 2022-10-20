@@ -21,14 +21,14 @@ const Header = styled("header")`
 `;
 
 const DefaultLayoutContent = styled("main")`
-  width: 1168px;
+  width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
   margin: 0 auto;
 
-  @media (max-width: 1199px) {
-    width: 736px;
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.xl - 1}px`}) {
+    width: ${({ theme }) => `${theme.breakpoints.md - 16 * 2}px`};
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
     width: auto;
     margin: 0 16px;
   }
