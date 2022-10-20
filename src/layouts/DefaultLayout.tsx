@@ -21,10 +21,15 @@ const Header = styled("header")`
 `;
 
 const DefaultLayoutContent = styled("main")`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 120px;
+  width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
+  margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.xl - 1}px`}) {
+    width: ${({ theme }) => `${theme.breakpoints.md - 16 * 2}px`};
+  }
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    width: auto;
+    margin: 0 16px;
+  }
 `;
