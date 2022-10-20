@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76.05 66.24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231815;
+      }
+
+      .cls-2 {
+        fill: #04cbd0;
+      }
+
+      .cls-3 {
+        fill: #fda100;
+        mix-blend-mode: overlay;
+      }
+
+      .cls-4 {
+        mix-blend-mode: multiply;
+      }
+
+      .cls-5 {
+        isolation: isolate;
+      }
+    </style>
+  </defs>
+  <g class="cls-5">
+    <g id="_레이어_2" data-name="레이어 2">
+      <g id="Layer_1" data-name="Layer 1">
+        <g>
+          <rect class="cls-3" x="5.16" y="5.16" width="40.61" height="40.61" rx="7.86" ry="7.86"
+            transform="translate(25.46 -10.55) rotate(45)" />
+          <g class="cls-4">
+            <rect class="cls-2" x="30.5" y="20.69" width="45.56" height="45.56" rx="22.78" ry="22.78" />
+          </g>
+          <g>
+            <circle class="cls-1" cx="54.75" cy="37.34" r="2.33" />
+            <circle class="cls-1" cx="61.88" cy="37.34" r="2.33" />
+          </g>
+          <circle class="cls-1" cx="22.38" cy="16.47" r="2.33" />
+          <circle class="cls-1" cx="27.42" cy="21.51" r="2.33" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
