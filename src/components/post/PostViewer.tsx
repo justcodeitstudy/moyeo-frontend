@@ -265,7 +265,7 @@ const RecruitmentContainer = styled.div`
 
 const RecruitmentType = styled.div`
   padding: 8px;
-  height: 48px;
+  height: 40px;
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.text.primary};
