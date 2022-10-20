@@ -1,5 +1,6 @@
 import React, { HTMLAttributes } from "react";
 import styled from "styled-components";
+import GridItem from "./GridItem";
 
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
@@ -8,6 +9,8 @@ export interface GridProps extends HTMLAttributes<HTMLDivElement> {
 const Grid = ({ children, ...rest }: GridProps) => {
   return <StyledGrid {...rest}>{children}</StyledGrid>;
 };
+
+Grid.Item = GridItem;
 
 export default Grid;
 
