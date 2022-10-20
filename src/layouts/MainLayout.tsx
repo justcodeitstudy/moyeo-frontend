@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BannerCarousel from "../components/main/BannerCarousel";
+import BannerCarousel from "components/main/BannerCarousel";
 
 export default function MainLayout({
   children,

@@ -37,12 +37,12 @@ const BannerCarousel = () => {
               </Title>
             </TitleWrapper>
           </ContentWrapper>
-          <ImageWrapper>
+          <ImageWrapper role="img" aria-label="Banner image">
             <Image
-              src={"/assets/banner/banner.webp"}
+              src="/assets/banner/banner.webp"
               layout="fill"
               priority
-              alt={"banner"}
+              alt="banner"
             />
           </ImageWrapper>
         </ItemContainer>
