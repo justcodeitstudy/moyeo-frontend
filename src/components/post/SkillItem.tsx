@@ -10,15 +10,11 @@ export interface SkillItemProps {
 
 const SkillItem = ({ name, src }: SkillItemProps) => {
   return (
-    <Tooltip
-      content={name}
-      // eslint-disable-next-line react/no-children-prop
-      children={
-        <ImageWrapper>
-          <Image src={src} alt={name} width="30px" height="30px" />
-        </ImageWrapper>
-      }
-    />
+    <Tooltip content={name}>
+      <ImageWrapper>
+        <Image src={src} alt={name} width="30px" height="30px" />
+      </ImageWrapper>
+    </Tooltip>
   );
 };
 
