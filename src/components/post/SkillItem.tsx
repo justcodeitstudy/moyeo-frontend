@@ -27,6 +27,6 @@ const ImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.colors.general[300]};
-  border-radius: 50%;
+  border-radius: 999px;
   overflow: hidden;
 `;
