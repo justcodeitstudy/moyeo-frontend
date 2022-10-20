@@ -19,7 +19,6 @@ export default function MainLayout({
 
 const MainLayoutRootContainer = styled("div")`
   width: 100%;
-  box-sizing: border-box;
 `;
 
 const Header = styled("header")`
