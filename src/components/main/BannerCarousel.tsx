@@ -18,15 +18,15 @@ const BannerCarousel = () => {
           <ContentWrapper>
             <ChipWrapper>
               <Chip
-                variants={"pill"}
-                color={"active"}
-                label={"고생 끝에 낙이 온다"}
+                variants="pill"
+                color="active"
+                label="고생 끝에 낙이 온다"
                 outlined
               />
               <Chip
-                variants={"pill"}
-                color={"active"}
-                label={"모여로 다 모여"}
+                variants="pill"
+                color="active"
+                label="모여로 다 모여"
                 outlined
               />
             </ChipWrapper>
