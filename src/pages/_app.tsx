@@ -41,17 +41,15 @@ function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(
+  return (
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <Hydrate state={dehydratedState}>
-          <RecoilRoot>
-            <Component {...rest} />
-          </RecoilRoot>
+          <RecoilRoot>{getLayout(<Component {...rest} />)}</RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
-    </ThemeProvider>,
+    </ThemeProvider>
   );
 }
 
