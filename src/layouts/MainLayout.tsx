@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "./Header/Header";
 
 export default function MainLayout({
   children,
@@ -19,10 +20,6 @@ export default function MainLayout({
 
 const MainLayoutRootContainer = styled("div")`
   width: 100%;
-`;
-
-const Header = styled("header")`
-  height: 72px;
 `;
 
 const Carousel = styled("div")`

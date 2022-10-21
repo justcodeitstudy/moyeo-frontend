@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import Header from "./Header/Header";
 
 interface DefaultLayoutProps {
   children?: React.ReactNode;
@@ -15,10 +16,6 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
 };
 
 const DefaultLayoutContainer = styled("div")``;
-
-const Header = styled("header")`
-  height: 72px;
-`;
 
 const DefaultLayoutContent = styled("main")`
   width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
