@@ -1,6 +1,7 @@
 import { PostCard } from "components/common/PostCard";
 import { Chip } from "jci-moyeo-design-system";
 import React from "react";
+import styled from "styled-components";
 
 export const post = {
   title: "태블릿 펜을 이용한 그림심리 검사앱",
@@ -16,8 +17,12 @@ export const ProjectStudy = () => {
       title={post?.title}
       content={post?.content}
       footer={post.skills.map((skill) => {
-        return <Chip key={skill} color="basic" label={skill} />;
+        return <StyledChip key={skill} color="basic" label={skill} />;
       })}
     />
   );
 };
+
+const StyledChip = styled(Chip)`
+  margin-right: 4px;
+`;

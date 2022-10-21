@@ -1,6 +1,7 @@
 import { PostCard } from "components/common/PostCard";
 import { Chip, Icon, Theme } from "jci-moyeo-design-system";
 import React from "react";
+import styled from "styled-components";
 import { post } from "./ProjectStudy";
 
 export const Scrap = () => {
@@ -17,8 +18,12 @@ export const Scrap = () => {
       }
       content={post?.content}
       footer={post.skills.map((skill) => {
-        return <Chip key={skill} color="basic" label={skill} />;
+        return <StyledChip key={skill} color="basic" label={skill} />;
       })}
     />
   );
 };
+
+const StyledChip = styled(Chip)`
+  margin-right: 4px;
+`;
