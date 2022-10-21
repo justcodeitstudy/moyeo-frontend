@@ -96,70 +96,68 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <ProfileContainer>
-          <UserProfileContainer>
-            <ProfilePicture />
-            <UserNickName>{myInfo.nickname}</UserNickName>
-          </UserProfileContainer>
-          <PcButton variants="filled" color="primary" type="submit">
-            수정 완료
-          </PcButton>
-        </ProfileContainer>
-        <Email>연결 계정 · {myInfo.email}</Email>
-        <SubCategoryText>닉네임 수정</SubCategoryText>
-        <StyledInputContainer>
-          <StyledTextInput
-            id="nickname"
-            name="nickname"
-            onChange={handleChange}
-            value={values.nickname}
-            message="한영, 최대 10글자 이내, 공백 특수문자 불가"
-          />
-        </StyledInputContainer>
-        <SubCategoryText>기술 스택 수정</SubCategoryText>
-        <StyledInputContainer>
-          <ChipContainer>
-            {values.skills.map((value) => {
-              return (
-                <StyledChip
-                  key={value}
-                  color="basic"
-                  variants="pill"
-                  onDelete={handleDelete}
-                  label={skills.find((skill) => skill.value === value)?.label}
-                />
-              );
-            })}
-          </ChipContainer>
-          <Select
-            isMulti
-            value={values.skills}
-            onSelect={handleSelectChange}
-            onChange={setOptionValues}
-            onClose={handleSelectClose}
-            placeholder="태그를 입력해주세요."
-            onSearchInputChange={handleSearchInputChange}
-          >
-            {optionList.length === 0 && (
-              <TagNotFoundText>검색된 태그가 없습니다.</TagNotFoundText>
-            )}
-            {optionList.map(({ value, label }) => (
-              <Option key={value} value={value}>
-                {label}
-              </Option>
-            ))}
-          </Select>
-        </StyledInputContainer>
-        <SubCategoryText>자기소개</SubCategoryText>
-        {/* TODO: smart editor로 변경 */}
-        <TextArea />
-        <MobileButton variants="filled" color="primary" type="submit">
+    <form onSubmit={handleSubmit}>
+      <ProfileContainer>
+        <UserProfileContainer>
+          <ProfilePicture />
+          <UserNickName>{myInfo.nickname}</UserNickName>
+        </UserProfileContainer>
+        <PcButton variants="filled" color="primary" type="submit">
           수정 완료
-        </MobileButton>
-      </form>
-    </>
+        </PcButton>
+      </ProfileContainer>
+      <Email>연결 계정 · {myInfo.email}</Email>
+      <SubCategoryText>닉네임 수정</SubCategoryText>
+      <StyledInputContainer>
+        <StyledTextInput
+          id="nickname"
+          name="nickname"
+          onChange={handleChange}
+          value={values.nickname}
+          message="한영, 최대 10글자 이내, 공백 특수문자 불가"
+        />
+      </StyledInputContainer>
+      <SubCategoryText>기술 스택 수정</SubCategoryText>
+      <StyledInputContainer>
+        <ChipContainer>
+          {values.skills.map((value) => {
+            return (
+              <StyledChip
+                key={value}
+                color="basic"
+                variants="pill"
+                onDelete={handleDelete}
+                label={skills.find((skill) => skill.value === value)?.label}
+              />
+            );
+          })}
+        </ChipContainer>
+        <Select
+          isMulti
+          value={values.skills}
+          onSelect={handleSelectChange}
+          onChange={setOptionValues}
+          onClose={handleSelectClose}
+          placeholder="태그를 입력해주세요."
+          onSearchInputChange={handleSearchInputChange}
+        >
+          {optionList.length === 0 && (
+            <TagNotFoundText>검색된 태그가 없습니다.</TagNotFoundText>
+          )}
+          {optionList.map(({ value, label }) => (
+            <Option key={value} value={value}>
+              {label}
+            </Option>
+          ))}
+        </Select>
+      </StyledInputContainer>
+      <SubCategoryText>자기소개</SubCategoryText>
+      {/* TODO: smart editor로 변경 */}
+      <TextArea />
+      <MobileButton variants="filled" color="primary" type="submit">
+        수정 완료
+      </MobileButton>
+    </form>
   );
 };
 
