@@ -67,18 +67,19 @@ const Container = styled.section`
   }
 
   .carousel {
-    max-width: 1220px;
-    margin: auto;
+    width: 100%;
   }
 `;
 
 const ItemContainer = styled.div`
-  display: flex !important;
+  display: flex;
   position: relative;
   width: 100%;
+  max-width: 1220px;
   height: 252px;
   align-items: center;
   justify-content: space-between;
+  margin: 0 auto;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md}px`}) {
     height: 152px;
