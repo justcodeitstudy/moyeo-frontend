@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import styled from "styled-components";
 import Banner from "components/post/Banner";
-import { Button, TextInput } from "jci-moyeo-design-system";
+import { Button } from "jci-moyeo-design-system";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
 import PostInformationForm from "./PostInformationForm";
-
-const Editor = dynamic(() => import("./Editor"), {
-  ssr: false,
-});
+import PostIntroductionForm from "./PostIntroductionForm";
 
 const PostEditor: NextPageWithLayout = () => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -27,9 +23,7 @@ const PostEditor: NextPageWithLayout = () => {
         <PostInformationForm />
       </Information>
       <Introduction>
-        <IntroductionTitle>모집 소개 작성</IntroductionTitle>
-        <TitleTextInput width="100%" placeholder="모집 제목을 입력해주세요." />
-        <Editor />
+        <PostIntroductionForm />
       </Introduction>
       <ButtonContainer>
         <StyledButton color="general" variants="filled">
@@ -61,20 +55,6 @@ const Information = styled.div`
 
 const Introduction = styled.div`
   margin-top: 72px;
-`;
-
-const IntroductionTitle = styled.h2`
-  margin-bottom: 20px;
-  ${({ theme }) => theme.typography.header2};
-
-  @media (max-width: 767px) {
-    margin-bottom: 12px;
-    ${({ theme }) => theme.typography.header3};
-  }
-`;
-
-const TitleTextInput = styled(TextInput)`
-  margin-bottom: 12px;
 `;
 
 const ButtonContainer = styled.div`
