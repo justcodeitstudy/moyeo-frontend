@@ -5,6 +5,7 @@ import Banner from "components/post/Banner";
 import { Button, TextInput } from "jci-moyeo-design-system";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
+import PostInformationForm from "./PostInformationForm";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
@@ -23,28 +24,7 @@ const PostEditor: NextPageWithLayout = () => {
     <PageContainer>
       <Banner />
       <Information>
-        <BasicTitle>모집 기본정보 입력</BasicTitle>
-        <GridContainer>
-          <GridItem>
-            <TextInput width="100%" label="모집 구분" />
-          </GridItem>
-          <GridItem>
-            <TextInput width="100%" label="진행 방식" />
-          </GridItem>
-        </GridContainer>
-        <GridContainer>
-          <GridItem>
-            <TextInput width="100%" label="모집 분야" />
-          </GridItem>
-          <GridItem>
-            <TextInput width="100%" label="연락 방법" />
-          </GridItem>
-        </GridContainer>
-        <GridContainer>
-          <GridItem>
-            <TextInput width="100%" label="기술 태그" />
-          </GridItem>
-        </GridContainer>
+        <PostInformationForm />
       </Information>
       <Introduction>
         <IntroductionTitle>모집 소개 작성</IntroductionTitle>
@@ -71,37 +51,12 @@ const PageContainer = styled.div`
   margin: 56px 0;
 `;
 
-const BasicTitle = styled.h2`
-  margin-bottom: 20px;
-  ${({ theme }) => theme.typography.header2};
-
-  @media (max-width: 767px) {
-    margin-bottom: 14px;
-    ${({ theme }) => theme.typography.header3};
-  }
-`;
-
 const Information = styled.div`
   margin-top: 56px;
 
   @media (max-width: 767px) {
     margin-top: 30px;
   }
-`;
-
-const GridContainer = styled.div`
-  margin-bottom: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const GridItem = styled.div`
-  flex: 1 1 0;
 `;
 
 const Introduction = styled.div`
