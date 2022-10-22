@@ -11,7 +11,7 @@ export interface SkillItemProps {
 const SkillItem = ({ name, src }: SkillItemProps) => {
   return (
     <Tooltip content={name}>
-      <ImageWrapper>
+      <ImageWrapper role="img" aria-label={name}>
         <Image src={src} alt={name} width="30px" height="30px" />
       </ImageWrapper>
     </Tooltip>
