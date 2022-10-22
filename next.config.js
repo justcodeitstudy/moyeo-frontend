@@ -9,6 +9,8 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    domains: ["moyeo-skillstack.s3.ap-northeast-2.amazonaws.com"],
   compiler: {
     styledComponents:
       true |
