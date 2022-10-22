@@ -15,6 +15,15 @@ const nextConfig = {
       "k.kakaocdn.net",
       "avatars.githubusercontent.com",
     ],
+    domains: ["moyeo-skillstack.s3.ap-northeast-2.amazonaws.com"],
+  compiler: {
+    styledComponents:
+      true |
+      {
+        ssr: true,
+        displayName: true,
+        preprocess: false,
+      },
   },
 };
 
