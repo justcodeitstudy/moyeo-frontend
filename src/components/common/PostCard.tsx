@@ -10,22 +10,14 @@ interface PostCardProps {
 
 export const PostCard = ({ title, content, footer }: PostCardProps) => {
   return (
-    <StyledCard>
+    <Card>
       <StyledCardTitle>{title}</StyledCardTitle>
       <StyledCardContent>{content}</StyledCardContent>
       <Divider />
       <StyledCardFooter>{footer}</StyledCardFooter>
-    </StyledCard>
+    </Card>
   );
 };
-
-const StyledCard = styled(Card)`
-  width: 486px;
-
-  @media (max-width: 767px) {
-    width: 343px;
-  }
-`;
 
 const StyledCardTitle = styled("header")`
   ${({ theme }) => theme.typography.header3};
