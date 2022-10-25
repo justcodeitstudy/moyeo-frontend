@@ -2892,10 +2892,10 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-jci-moyeo-design-system@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/jci-moyeo-design-system/-/jci-moyeo-design-system-0.2.2.tgz#45ff2dc8d4520df9c615f580c4be4c49090427b7"
-  integrity sha512-sFwPYMMEZBpyvnVERBqMbN+XyKjLBQzorGx0SyGAVXvKD1Wk9Se8L5AUVibvfLT7euniZ4bYRmaBcdSz9Qz5oA==
+jci-moyeo-design-system@~0.2.2:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/jci-moyeo-design-system/-/jci-moyeo-design-system-0.2.3.tgz#b92e24d4b7975f78f3820f23700e5fb15258f9e7"
+  integrity sha512-ty6Fy1Za3pg+ZvHSdRgN9ky/sSkemK9gybqtFik8JmiKpOdRYswp+m7676lakZjVHH69uGYxiGBvV6yBta0qAA==
 
 js-sdsl@^4.1.4:
   version "4.1.5"
