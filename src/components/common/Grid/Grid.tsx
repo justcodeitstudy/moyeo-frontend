@@ -19,6 +19,7 @@ const StyledGrid = styled.div`
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
 `;

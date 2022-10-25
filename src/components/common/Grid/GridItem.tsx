@@ -11,4 +11,8 @@ const GridItem = ({ children, ...rest }: GridItemProps) => {
 
 export default GridItem;
 
-const StyledGridItem = styled.div``;
+const StyledGridItem = styled.div`
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    width: 100%;
+  }
+`;
