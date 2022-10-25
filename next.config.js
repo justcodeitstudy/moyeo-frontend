@@ -10,6 +10,11 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: [
+      "lh3.googleusercontent.com",
+      "k.kakaocdn.net",
+      "avatars.githubusercontent.com",
+    ],
     domains: ["moyeo-skillstack.s3.ap-northeast-2.amazonaws.com"],
   compiler: {
     styledComponents:
