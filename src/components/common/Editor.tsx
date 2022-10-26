@@ -1,4 +1,4 @@
-import React, { forwardRef, LegacyRef, memo } from "react";
+import React, { forwardRef, memo } from "react";
 import {
   Editor as TuiEditor,
   EditorProps as TuiEditorProps,
