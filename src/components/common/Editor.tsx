@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { forwardRef, LegacyRef, memo } from "react";
 import {
   Editor as TuiEditor,
   EditorProps as TuiEditorProps,
@@ -30,9 +30,11 @@ const toolbarItems = [
   ["code", "codeblock"],
 ];
 
-const Editor = (props: EditorProps) => {
+// eslint-disable-next-line react/display-name
+const Editor = forwardRef<TuiEditor, EditorProps>((props, ref) => {
   return (
     <TuiEditor
+      ref={ref}
       previewStyle="tab"
       previewHighlight={true}
       initialEditType="wysiwyg"
@@ -44,6 +46,6 @@ const Editor = (props: EditorProps) => {
       {...props}
     />
   );
-};
+});
 
 export default memo(Editor);
