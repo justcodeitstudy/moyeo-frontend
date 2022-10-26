@@ -112,7 +112,7 @@ export const personnelOptions = [
     label: "9명",
   },
   {
-    id: 2,
+    id: 11,
     value: "10명",
     label: "10명",
   },
