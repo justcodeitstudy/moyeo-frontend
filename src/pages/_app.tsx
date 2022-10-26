@@ -11,6 +11,7 @@ import { NextPage, NextPageContext } from "next/types";
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, Theme } from "jci-moyeo-design-system";
+import "../styles/toastui.css";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

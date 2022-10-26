@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header/Header";
+import BannerCarousel from "components/main/BannerCarousel";
 
 export default function MainLayout({
   children,
@@ -10,7 +11,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <Carousel />
+      <BannerCarousel />
       <MainLayoutRootContainer>
         <MainLayoutContent>{children}</MainLayoutContent>
       </MainLayoutRootContainer>
@@ -20,10 +21,6 @@ export default function MainLayout({
 
 const MainLayoutRootContainer = styled("div")`
   width: 100%;
-`;
-
-const Carousel = styled("div")`
-  height: 272px;
 `;
 
 const MainLayoutContent = styled("main")`

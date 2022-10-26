@@ -15,7 +15,10 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   );
 };
 
-const DefaultLayoutContainer = styled("div")``;
+const DefaultLayoutContainer = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
+`;
 
 const DefaultLayoutContent = styled("main")`
   width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
