@@ -7,7 +7,7 @@ import { IconButton } from "jci-moyeo-design-system";
 import Avatar from "components/common/Avatar";
 import SkillItem from "./SkillItem";
 
-const Viewer = dynamic(() => import("./Viewer"), {
+const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
 });
 
