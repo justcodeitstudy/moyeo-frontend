@@ -26,6 +26,5 @@ const nextConfig = {
         preprocess: false,
       },
   },
-};
-
+}
 module.exports = nextConfig;
