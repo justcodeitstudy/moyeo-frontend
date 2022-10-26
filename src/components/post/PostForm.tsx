@@ -14,7 +14,7 @@ import {
 } from "./SelectOptions";
 import { SkillSelect } from "components/common/SkillSelect";
 
-const Editor = dynamic(() => import("./Editor"), {
+const Editor = dynamic(() => import("../common/Editor"), {
   ssr: false,
 });
 
