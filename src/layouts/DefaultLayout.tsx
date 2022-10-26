@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import Header from "./Header/Header";
 
 interface DefaultLayoutProps {
   children?: React.ReactNode;
@@ -14,10 +15,9 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   );
 };
 
-const DefaultLayoutContainer = styled("div")``;
-
-const Header = styled("header")`
-  height: 72px;
+const DefaultLayoutContainer = styled("div")`
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const DefaultLayoutContent = styled("main")`
