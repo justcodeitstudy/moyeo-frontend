@@ -3,7 +3,9 @@ import dynamic from "next/dynamic";
 import styled, { css } from "styled-components";
 import { DefaultLayout } from "layouts/DefaultLayout";
 import { NextPageWithLayout } from "pages/_app";
-import PostButton from "./PostButton";
+import { IconButton } from "jci-moyeo-design-system";
+import Avatar from "components/common/Avatar";
+import SkillItem from "./SkillItem";
 
 const Viewer = dynamic(() => import("./Viewer"), {
   ssr: false,
@@ -24,14 +26,14 @@ const PostViewer: NextPageWithLayout = () => {
         <TitleContainer>
           <Title>온라인 모각코 인원 모집합니다!</Title>
           <ButtonContainer>
-            <PostButton name="checkInCircle" checked={true} />
-            <PostButton name="write" />
-            <PostButton name="delete" />
+            <IconButton icon="checkInCircle" color="primary" />
+            <IconButton icon="write" />
+            <IconButton icon="delete" />
           </ButtonContainer>
         </TitleContainer>
         <SubTitleContainer>
           <SubTitleLeft>
-            <Profile />
+            <Avatar id="" />
             <Nickname>닉네임</Nickname>
             <Date>2022.10.18</Date>
           </SubTitleLeft>
@@ -54,7 +56,7 @@ const PostViewer: NextPageWithLayout = () => {
           </GridContainer>
           <GridContainer>
             <GridItem>
-              <Label style={{ marginTop: "8px" }}>모집 분야</Label>
+              <Label marginTop="8px">모집 분야</Label>
               <Content width="192px">
                 <RecruitmentContainer>
                   <RecruitmentType>디자이너 1명</RecruitmentType>
@@ -69,18 +71,9 @@ const PostViewer: NextPageWithLayout = () => {
           </GridContainer>
           <SkillContainer>
             <Label>기술 태그</Label>
-            <SkillListContainer>
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-              <Skill />
-            </SkillListContainer>
+            <SkillItemContainer>
+              <SkillItem name="" src="" />
+            </SkillItemContainer>
           </SkillContainer>
         </Information>
         <Divider />
@@ -157,17 +150,8 @@ const SubTitleLeft = styled.div`
 
 const SubTitleRight = styled.div``;
 
-// TODO: 프로필 컴포넌트로 대체
-const Profile = styled.div`
-  margin-right: 12px;
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.general["200"]};
-`;
-
 const Nickname = styled.span`
+  margin-left: 12px;
   margin-right: 20px;
   ${({ theme }) => theme.typography.header4};
   color: ${({ theme }) => theme.colors.text.primary};
@@ -211,7 +195,8 @@ const GridItem = styled.div`
   display: flex;
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ marginTop?: string }>`
+  margin-top: ${({ marginTop }) => (marginTop ? marginTop : 0)};
   width: 92px;
   ${({ theme }) => theme.typography.md};
   color: ${({ theme }) => theme.colors.text.secondary};
@@ -241,20 +226,11 @@ const SkillContainer = styled.div`
   }
 `;
 
-const SkillListContainer = styled.div`
+const SkillItemContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-`;
-
-// TODO: 기술 스택 컴포넌트로 대체
-const Skill = styled.div`
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.general["200"]};
 `;
 
 const RecruitmentContainer = styled.div`
