@@ -3,10 +3,11 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
+
 const Popover = dynamic(
   () => import("jci-moyeo-design-system").then((r) => r.Popover),
   {
@@ -15,6 +16,8 @@ const Popover = dynamic(
 );
 
 const Header = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+
   // TODO : 임시 변수
   const isLogin = false;
   const [isSignup, setIsSignup] = useState(false);
@@ -24,7 +27,7 @@ const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const handleWriteButtonClick = () => {
-    router.push("/recuruitment/register");
+    router.push("/post/register");
   };
 
   const handleLoginClick = () => {
@@ -39,6 +42,12 @@ const Header = () => {
     setIsLoginModalOpen(false);
     setIsSignup(true);
   };
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
 
   return (
     <StyledHeader>
