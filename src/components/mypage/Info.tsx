@@ -1,3 +1,4 @@
+import Avatar from "components/common/Avatar";
 import { Button, Chip } from "jci-moyeo-design-system";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -30,7 +31,7 @@ export const Info = () => {
         <>
           <ProfileContainer>
             <UserProfileContainer>
-              <ProfilePicture />
+              <Avatar id="" />
               <UserNickName>{myInfo.nickname}</UserNickName>
             </UserProfileContainer>
             <PcButton
@@ -80,15 +81,8 @@ export const UserProfileContainer = styled("div")`
   align-items: center;
 `;
 
-export const ProfilePicture = styled("div")`
-  width: 36px;
-  height: 36px;
-  margin-right: 16px;
-  border-radius: 9999px;
-  background-color: ${({ theme }) => theme.colors.primary[300]};
-`;
-
 export const UserNickName = styled("h2")`
+  margin-left: 16px;
   ${({ theme }) => theme.typography.header2};
 `;
 
