@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BannerCarousel from "./BannerCarousel";
+import BannerCarousel from "../../layouts/BannerCarousel";
 import { Search } from "./Search";
 import { PostList } from "components/common/PostList";
 import Image from "next/image";

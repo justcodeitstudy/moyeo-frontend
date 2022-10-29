@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import BannerCarousel from "components/main/BannerCarousel";
+import BannerCarousel from "layouts/BannerCarousel";
 
 export default function MainLayout({
   children,
