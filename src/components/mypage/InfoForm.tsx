@@ -4,13 +4,13 @@ import styled from "styled-components";
 import {
   Email,
   ProfileContainer,
-  ProfilePicture,
   UserNickName,
   UserProfileContainer,
   SubCategoryText,
   myInfo,
 } from "./Info";
 import { useFormik } from "formik";
+import Avatar from "components/common/Avatar";
 
 interface InfoFormProps {
   onUpdate: () => void;
@@ -99,7 +99,7 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
     <form onSubmit={handleSubmit}>
       <ProfileContainer>
         <UserProfileContainer>
-          <ProfilePicture />
+          <Avatar id="" />
           <UserNickName>{myInfo.nickname}</UserNickName>
         </UserProfileContainer>
         <PcButton variants="filled" color="primary" type="submit">
