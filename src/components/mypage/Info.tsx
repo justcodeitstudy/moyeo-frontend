@@ -1,7 +1,14 @@
+import Avatar from "components/common/Avatar";
+import Section from "components/common/Section";
 import { Button, Chip } from "jci-moyeo-design-system";
+import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { InfoForm } from "./InfoForm";
+
+const Viewer = dynamic(() => import("../common/Viewer"), {
+  ssr: false,
+});
 
 export const myInfo = {
   nickname: "모요미",
@@ -30,7 +37,7 @@ export const Info = () => {
         <>
           <ProfileContainer>
             <UserProfileContainer>
-              <ProfilePicture />
+              <Avatar id="" />
               <UserNickName>{myInfo.nickname}</UserNickName>
             </UserProfileContainer>
             <PcButton
@@ -52,7 +59,12 @@ export const Info = () => {
             />
           ))}
           <SubCategoryText>자기 소개</SubCategoryText>
-          <InfoText>{myInfo.info}</InfoText>
+          <Section>
+            <InfoText>
+              <Viewer initialValue={myInfo.info} />
+            </InfoText>
+          </Section>
+
           <MobileButton
             variants="outlined"
             color="general"
@@ -80,15 +92,8 @@ export const UserProfileContainer = styled("div")`
   align-items: center;
 `;
 
-export const ProfilePicture = styled("div")`
-  width: 36px;
-  height: 36px;
-  margin-right: 16px;
-  border-radius: 9999px;
-  background-color: ${({ theme }) => theme.colors.primary[300]};
-`;
-
 export const UserNickName = styled("h2")`
+  margin-left: 16px;
   ${({ theme }) => theme.typography.header2};
 `;
 
@@ -107,10 +112,6 @@ const StyledChip = styled(Chip)`
 `;
 
 const InfoText = styled("div")`
-  ${({ theme }) => theme.typography.sm};
-  color: ${({ theme }) => theme.colors.black[300]};
-  border: 1px solid ${({ theme }) => theme.colors.general["300"]};
-  border-radius: 4px;
   padding: 20px 20px 32px 20px;
 `;
 
