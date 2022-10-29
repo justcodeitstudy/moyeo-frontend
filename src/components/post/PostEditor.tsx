@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Banner from "components/post/Banner";
-import { DefaultLayout } from "layouts/DefaultLayout";
-import { NextPageWithLayout } from "pages/_app";
 import PostForm from "./PostForm";
 
-const PostEditor: NextPageWithLayout = () => {
+const PostEditor = () => {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -22,10 +20,6 @@ const PostEditor: NextPageWithLayout = () => {
       </FormWrapper>
     </PageContainer>
   );
-};
-
-PostEditor.getLayout = (page) => {
-  return <DefaultLayout>{page}</DefaultLayout>;
 };
 
 export default PostEditor;

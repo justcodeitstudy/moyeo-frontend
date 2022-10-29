@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled, { css } from "styled-components";
-import { DefaultLayout } from "layouts/DefaultLayout";
-import { NextPageWithLayout } from "pages/_app";
 import { IconButton } from "jci-moyeo-design-system";
 import Avatar from "components/common/Avatar";
 import SkillItem from "./SkillItem";
@@ -11,7 +9,7 @@ const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
 });
 
-const PostViewer: NextPageWithLayout = () => {
+const PostViewer = () => {
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -81,10 +79,6 @@ const PostViewer: NextPageWithLayout = () => {
       </InformationSection>
     </PageContainer>
   );
-};
-
-PostViewer.getLayout = (page) => {
-  return <DefaultLayout>{page}</DefaultLayout>;
 };
 
 export default PostViewer;

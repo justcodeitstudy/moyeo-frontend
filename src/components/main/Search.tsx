@@ -1,5 +1,5 @@
 import { Chip, Icon, SearchInput, Switch } from "jci-moyeo-design-system";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const skills = [
@@ -34,6 +34,7 @@ const skills = [
 ];
 
 export const Search = () => {
+  const [hasMounted, setHasMounted] = useState(false);
   const [checked, setChecked] = useState(true);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
@@ -69,6 +70,12 @@ export const Search = () => {
     const value = skills?.find((skill) => skill.label === label)?.value;
     setSelectedSkills(selectedSkills?.filter((x) => x !== value));
   };
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
 
   return (
     <>

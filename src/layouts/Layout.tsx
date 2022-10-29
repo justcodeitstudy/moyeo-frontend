@@ -1,29 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "./Header/Header";
-import BannerCarousel from "components/main/BannerCarousel";
+import Header from "./Header";
 
-export default function MainLayout({
-  children,
-}: {
+export interface LayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      <BannerCarousel />
-      <MainLayoutRootContainer>
-        <MainLayoutContent>{children}</MainLayoutContent>
-      </MainLayoutRootContainer>
+      <LayoutRootContainer>
+        <LayoutContent>{children}</LayoutContent>
+      </LayoutRootContainer>
     </>
   );
-}
+};
 
-const MainLayoutRootContainer = styled("div")`
+export default Layout;
+
+const LayoutRootContainer = styled.div`
   width: 100%;
 `;
 
-const MainLayoutContent = styled("main")`
+const LayoutContent = styled.main`
   width: ${({ theme }) => `${theme.breakpoints.xl - 16 * 2}px`};
   margin: 0 auto;
 
