@@ -10,7 +10,6 @@ import { useState } from "react";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, Theme } from "jci-moyeo-design-system";
-import Layout from "layouts/Layout";
 import "../styles/toastui.css";
 import { NextPage, NextPageContext } from "next";
 
