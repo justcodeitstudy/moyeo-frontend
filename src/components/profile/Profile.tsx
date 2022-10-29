@@ -1,7 +1,17 @@
+import React from "react";
+import dynamic from "next/dynamic";
+import styled from "styled-components";
 import Section from "components/common/Section";
 import { Chip } from "jci-moyeo-design-system";
-import React from "react";
-import styled from "styled-components";
+import Avatar from "components/common/Avatar";
+
+const Viewer = dynamic(() => import("../common/Viewer"), {
+  ssr: false,
+});
+
+const initialValue = `제 인생에서 1차적인 목표인 장기복무 합격이 올해 이루어졌기 때문에
+한동안 많은 생각을 하면서 다음 목표를 정하려고 노력했습니다. 그래서
+생각한 것은 상사 진급 및 학사학위 취득입니다.`;
 
 const Profile = () => {
   return (
@@ -10,7 +20,7 @@ const Profile = () => {
         안녕하세요 <TitleNickname>모요미</TitleNickname>입니다.
       </Title>
       <UserContainer>
-        <Avatar />
+        <Avatar id="" />
         <Nickname>모요미</Nickname>
       </UserContainer>
       <Info>
@@ -30,12 +40,9 @@ const Profile = () => {
       </Info>
       <Info>
         <SubTitle>자기소개</SubTitle>
-        {/* TODO: toast ui viewer로 대체 */}
         <Section>
           <Introduction>
-            제 인생에서 1차적인 목표인 장기복무 합격이 올해 이루어졌기 때문에
-            한동안 많은 생각을 하면서 다음 목표를 정하려고 노력했습니다. 그래서
-            생각한 것은 상사 진급 및 학사학위 취득입니다.
+            <Viewer initialValue={initialValue} />
           </Introduction>
         </Section>
       </Info>
@@ -70,17 +77,8 @@ const UserContainer = styled.div`
   align-items: center;
 `;
 
-// TODO: Avatar 컴포넌트로 대체
-const Avatar = styled.span`
-  margin-right: 16px;
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  background-color: #d9d9d9;
-`;
-
 const Nickname = styled.span`
+  margin-left: 16px;
   ${({ theme }) => theme.typography.header2};
   color: ${({ theme }) => theme.colors.text.title};
 
