@@ -11,6 +11,12 @@ import {
 } from "./Info";
 import { useFormik } from "formik";
 import Avatar from "components/common/Avatar";
+import dynamic from "next/dynamic";
+import Section from "components/common/Section";
+
+const Viewer = dynamic(() => import("../common/Viewer"), {
+  ssr: false,
+});
 
 interface InfoFormProps {
   onUpdate: () => void;
@@ -152,8 +158,11 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
         </Select>
       </StyledInputContainer>
       <SubCategoryText>자기소개</SubCategoryText>
-      {/* TODO: smart editor로 변경 */}
-      <TextArea />
+      <Section>
+        <TextArea>
+          <Viewer />
+        </TextArea>
+      </Section>
       <MobileButton variants="filled" color="primary" type="submit">
         수정 완료
       </MobileButton>
@@ -179,13 +188,6 @@ const TagNotFoundText = styled("span")`
 `;
 
 const TextArea = styled("textarea")`
-  ${({ theme }) => theme.typography.sm};
-  color: ${({ theme }) => theme.colors.black[300]};
-  outline: none;
-  border: 1px solid ${({ theme }) => theme.colors.general["300"]};
-  border-radius: 4px;
-  width: 100%;
-  height: 96px;
   padding: 20px 20px 32px 20px;
 `;
 
