@@ -159,9 +159,9 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
       </StyledInputContainer>
       <SubCategoryText>자기소개</SubCategoryText>
       <Section>
-        <TextArea>
-          <Viewer />
-        </TextArea>
+        <InfoText>
+          <Viewer initialValue={myInfo.info} />
+        </InfoText>
       </Section>
       <MobileButton variants="filled" color="primary" type="submit">
         수정 완료
@@ -188,6 +188,10 @@ const TagNotFoundText = styled("span")`
 `;
 
 const TextArea = styled("textarea")`
+  padding: 20px 20px 32px 20px;
+`;
+
+const InfoText = styled("div")`
   padding: 20px 20px 32px 20px;
 `;
 
