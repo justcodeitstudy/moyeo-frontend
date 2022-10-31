@@ -53,7 +53,7 @@ export const Search = () => {
 
       return setSelectedSkills(selectedSkills?.concat(value));
     },
-    [setSelectedSkills],
+    [selectedSkills, setSelectedSkills],
   );
 
   const isSelected = useCallback(
@@ -141,6 +141,7 @@ const PcSearchContainer = styled("div")`
 
 const StyledChipContainer = styled("div")`
   margin-right: 8px;
+  cursor: pointer;
 `;
 
 const SkillChipContainer = styled("div")`
