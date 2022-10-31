@@ -51,15 +51,16 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
   const [optionValues, setOptionValues] = useState<string[]>([]);
   const [optionList, setOptionList] = useState(skills);
 
-  const { handleSubmit, handleChange, setFieldValue, values } = useFormik({
-    initialValues: myInfo,
-    onSubmit: (values, actions) => {
-      console.log({ values, actions });
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-      onUpdate();
-    },
-  });
+  const { handleSubmit, submitForm, handleChange, setFieldValue, values } =
+    useFormik({
+      initialValues: myInfo,
+      onSubmit: (values, actions) => {
+        console.log({ values, actions });
+        alert(JSON.stringify(values, null, 2));
+        actions.setSubmitting(false);
+        onUpdate();
+      },
+    });
 
   const handleSelectChange = (value: string) => {
     const multiSelectValues = values.skills ?? [];
@@ -108,7 +109,12 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
           <Avatar id="" />
           <UserNickName>{myInfo.nickname}</UserNickName>
         </UserProfileContainer>
-        <PcButton variants="filled" color="primary" type="submit">
+        <PcButton
+          variants="filled"
+          color="primary"
+          type="submit"
+          onClick={submitForm}
+        >
           수정 완료
         </PcButton>
       </ProfileContainer>
@@ -163,7 +169,12 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
           <Viewer initialValue={myInfo.info} />
         </InfoText>
       </Section>
-      <MobileButton variants="filled" color="primary" type="submit">
+      <MobileButton
+        variants="filled"
+        color="primary"
+        type="submit"
+        onClick={submitForm}
+      >
         수정 완료
       </MobileButton>
     </form>
@@ -185,10 +196,6 @@ const TagNotFoundText = styled("span")`
   font-size: 16px;
   line-height: 100%;
   color: ${({ theme }) => theme.colors.black[300]};
-`;
-
-const TextArea = styled("textarea")`
-  padding: 20px 20px 32px 20px;
 `;
 
 const InfoText = styled("div")`
