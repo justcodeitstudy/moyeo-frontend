@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import BannerCarousel from "./BannerCarousel";
 import { Search } from "./Search";
 import { PostList } from "components/common/PostList";
 import Image from "next/image";
@@ -8,7 +7,6 @@ import Image from "next/image";
 const Main = () => {
   return (
     <>
-      <BannerCarousel />
       <SearchWrapper>
         <Search />
       </SearchWrapper>

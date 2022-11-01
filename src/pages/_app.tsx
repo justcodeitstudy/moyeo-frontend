@@ -10,13 +10,24 @@ import { useState } from "react";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, Theme } from "jci-moyeo-design-system";
-import Layout from "layouts/Layout";
 import "../styles/toastui.css";
+import { NextPage, NextPageContext } from "next";
 
-function MoyeoApp({
-  Component,
-  pageProps,
-}: AppProps<{ dehydratedState?: DehydratedState }>) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  // eslint-disable-next-line no-unused-vars
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = {
+  err?: NextPageContext["err"];
+} & AppProps<{
+  dehydratedState?: DehydratedState;
+}> & {
+    Component: NextPageWithLayout;
+  };
+
+function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
   const { dehydratedState, ...rest } = pageProps;
   const [queryClient] = useState(
     () =>
@@ -29,16 +40,14 @@ function MoyeoApp({
       }),
   );
 
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <Hydrate state={dehydratedState}>
-          <RecoilRoot>
-            <Layout>
-              <Component {...rest} />
-            </Layout>
-          </RecoilRoot>
+          <RecoilRoot>{getLayout(<Component {...rest} />)}</RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
     </ThemeProvider>
