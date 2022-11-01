@@ -40,13 +40,15 @@ export const Info = () => {
               <Avatar id="" />
               <UserNickName>{myInfo.nickname}</UserNickName>
             </UserProfileContainer>
-            <PcButton
-              variants="outlined"
-              color="general"
-              onClick={handleShowInfoForm}
-            >
-              내 정보 수정
-            </PcButton>
+            <PcButtonContainer>
+              <Button
+                variants="outlined"
+                color="general"
+                onClick={handleShowInfoForm}
+              >
+                내 정보 수정
+              </Button>
+            </PcButtonContainer>
           </ProfileContainer>
           <Email>연결 계정 · {myInfo.email}</Email>
           <SubCategoryText>기술 스택</SubCategoryText>
@@ -64,14 +66,15 @@ export const Info = () => {
               <Viewer initialValue={myInfo.info} />
             </InfoText>
           </Section>
-
-          <MobileButton
-            variants="outlined"
-            color="general"
-            onClick={handleShowInfoForm}
-          >
-            내 정보 수정
-          </MobileButton>
+          <MobileButtonContainer>
+            <MobileButton
+              variants="outlined"
+              color="general"
+              onClick={handleShowInfoForm}
+            >
+              내 정보 수정
+            </MobileButton>
+          </MobileButtonContainer>
         </>
       )}
     </InfoContainer>
@@ -115,8 +118,14 @@ const InfoText = styled("div")`
   padding: 20px 20px 32px 20px;
 `;
 
-const PcButton = styled(Button)`
+const PcButtonContainer = styled("div")`
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    display: none;
+  }
+`;
+
+const MobileButtonContainer = styled("div")`
+  @media (min-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
     display: none;
   }
 `;
@@ -124,8 +133,4 @@ const PcButton = styled(Button)`
 const MobileButton = styled(Button)`
   width: 100%;
   margin-top: 16px;
-
-  @media (min-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
-    display: none;
-  }
 `;

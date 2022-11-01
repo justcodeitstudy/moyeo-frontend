@@ -4,13 +4,19 @@ import styled from "styled-components";
 import {
   Email,
   ProfileContainer,
-  ProfilePicture,
   UserNickName,
   UserProfileContainer,
   SubCategoryText,
   myInfo,
 } from "./Info";
 import { useFormik } from "formik";
+import Avatar from "components/common/Avatar";
+import dynamic from "next/dynamic";
+import Section from "components/common/Section";
+
+const Viewer = dynamic(() => import("../common/Viewer"), {
+  ssr: false,
+});
 
 interface InfoFormProps {
   onUpdate: () => void;
@@ -45,15 +51,16 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
   const [optionValues, setOptionValues] = useState<string[]>([]);
   const [optionList, setOptionList] = useState(skills);
 
-  const { handleSubmit, handleChange, setFieldValue, values } = useFormik({
-    initialValues: myInfo,
-    onSubmit: (values, actions) => {
-      console.log({ values, actions });
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-      onUpdate();
-    },
-  });
+  const { handleSubmit, submitForm, handleChange, setFieldValue, values } =
+    useFormik({
+      initialValues: myInfo,
+      onSubmit: (values, actions) => {
+        console.log({ values, actions });
+        alert(JSON.stringify(values, null, 2));
+        actions.setSubmitting(false);
+        onUpdate();
+      },
+    });
 
   const handleSelectChange = (value: string) => {
     const multiSelectValues = values.skills ?? [];
@@ -99,10 +106,15 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
     <form onSubmit={handleSubmit}>
       <ProfileContainer>
         <UserProfileContainer>
-          <ProfilePicture />
+          <Avatar id="" />
           <UserNickName>{myInfo.nickname}</UserNickName>
         </UserProfileContainer>
-        <PcButton variants="filled" color="primary" type="submit">
+        <PcButton
+          variants="filled"
+          color="primary"
+          type="submit"
+          onClick={submitForm}
+        >
           수정 완료
         </PcButton>
       </ProfileContainer>
@@ -152,9 +164,17 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
         </Select>
       </StyledInputContainer>
       <SubCategoryText>자기소개</SubCategoryText>
-      {/* TODO: smart editor로 변경 */}
-      <TextArea />
-      <MobileButton variants="filled" color="primary" type="submit">
+      <Section>
+        <InfoText>
+          <Viewer initialValue={myInfo.info} />
+        </InfoText>
+      </Section>
+      <MobileButton
+        variants="filled"
+        color="primary"
+        type="submit"
+        onClick={submitForm}
+      >
         수정 완료
       </MobileButton>
     </form>
@@ -178,14 +198,7 @@ const TagNotFoundText = styled("span")`
   color: ${({ theme }) => theme.colors.black[300]};
 `;
 
-const TextArea = styled("textarea")`
-  ${({ theme }) => theme.typography.sm};
-  color: ${({ theme }) => theme.colors.black[300]};
-  outline: none;
-  border: 1px solid ${({ theme }) => theme.colors.general["300"]};
-  border-radius: 4px;
-  width: 100%;
-  height: 96px;
+const InfoText = styled("div")`
   padding: 20px 20px 32px 20px;
 `;
 
