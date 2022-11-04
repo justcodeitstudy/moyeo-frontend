@@ -8,32 +8,36 @@ export interface AlertModalProps {
   content?: string;
   icon?: React.ReactNode;
   // Todo: any 제거
-  confirmText?: string;
-  handleClose?: () => any;
-  handleConfirm?: () => any;
+  buttonText?: string;
+  onModalClose?: () => any;
+  onButtonClick?: () => any;
 }
 
 export const AlertModal = ({
   title,
   content,
   icon,
-  handleClose,
-  confirmText = "확인",
-  handleConfirm,
+  onModalClose,
+  buttonText: confirmText = "확인",
+  onButtonClick,
 }: AlertModalProps) => {
   const { close } = useModal();
 
   const onClose = () => {
-    if (handleClose) {
-      handleClose();
+    if (!onModalClose) {
+      return;
     }
+
+    onModalClose();
     close();
   };
 
-  const onConfirm = async () => {
-    if (handleConfirm) {
-      await handleConfirm();
+  const onConfirm = () => {
+    if (!onButtonClick) {
+      return;
     }
+
+    onButtonClick();
     close();
   };
 

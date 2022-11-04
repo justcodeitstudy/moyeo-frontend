@@ -10,7 +10,7 @@ export interface ConfirmModalProps {
   confirmText?: string;
   // Todo: any제거
   handleClose?: () => any;
-  handleConfirm?: () => any;
+  onConfirm?: () => any;
 }
 
 const ConfirmModal = ({
@@ -19,7 +19,7 @@ const ConfirmModal = ({
   confirmText = "확인",
   cancelText = "취소",
   handleClose,
-  handleConfirm,
+  onConfirm,
 }: ConfirmModalProps) => {
   const { close } = useModal();
 
@@ -30,10 +30,11 @@ const ConfirmModal = ({
     close();
   };
 
-  const onConfirm = async () => {
-    if (handleConfirm) {
-      await handleConfirm();
+  const handleConfirm = () => {
+    if (!onConfirm) {
+      return;
     }
+    onConfirm();
     close();
   };
 
@@ -45,7 +46,7 @@ const ConfirmModal = ({
           <ContentContainer>{content}</ContentContainer>
           <ButtonContainer>
             <Button
-              onClick={onConfirm}
+              onClick={handleConfirm}
               width="100%"
               variants="outlined"
               color="general"
@@ -68,6 +69,7 @@ const ModalContentContainer = styled("div")`
   display: flex;
   flex-direction: column;
   padding: 28px 32px;
+  background-color: white;
   width: min-content;
   min-width: 635px;
   white-space: pre-line;
