@@ -13,7 +13,7 @@ export interface ConfirmModalProps {
   onConfirm?: () => any;
 }
 
-const ConfirmModal = ({
+export const ConfirmModal = ({
   title,
   content,
   confirmText = "확인",
@@ -39,7 +39,7 @@ const ConfirmModal = ({
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal isOpen onClose={onClose}>
       <Modal.Content>
         <ModalContentContainer>
           <TitleContainer>{title}</TitleContainer>
@@ -63,13 +63,10 @@ const ConfirmModal = ({
   );
 };
 
-export default ConfirmModal;
-
 const ModalContentContainer = styled("div")`
   display: flex;
   flex-direction: column;
   padding: 28px 32px;
-  background-color: white;
   width: min-content;
   min-width: 635px;
   white-space: pre-line;

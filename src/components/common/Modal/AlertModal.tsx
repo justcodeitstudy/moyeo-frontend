@@ -18,17 +18,15 @@ export const AlertModal = ({
   content,
   icon,
   onModalClose,
-  buttonText: confirmText = "확인",
+  buttonText = "확인",
   onButtonClick,
 }: AlertModalProps) => {
   const { close } = useModal();
 
   const onClose = () => {
-    if (!onModalClose) {
-      return;
+    if (onModalClose) {
+      onModalClose();
     }
-
-    onModalClose();
     close();
   };
 
@@ -36,19 +34,18 @@ export const AlertModal = ({
     if (!onButtonClick) {
       return;
     }
-
     onButtonClick();
     close();
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal isOpen onClose={onClose}>
       <Modal.Content>
         <ModalContentContainer>
           <IconContainer>{icon}</IconContainer>
           <TitleContainer>{title}</TitleContainer>
           <ContentContainer>{content}</ContentContainer>
-          <Button onClick={onConfirm}>{confirmText}</Button>
+          <Button onClick={onConfirm}>{buttonText}</Button>
         </ModalContentContainer>
       </Modal.Content>
     </Modal>

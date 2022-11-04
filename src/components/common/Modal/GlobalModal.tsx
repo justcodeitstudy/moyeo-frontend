@@ -2,14 +2,14 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { AlertModal } from "./AlertModal";
 import { modalState } from "recoil/modal";
-import ConfirmModal from "./ConfirmModal";
+import { ConfirmModal } from "./ConfirmModal";
 
 export const MODAL_TYPES = {
   alert: "alert",
   confirm: "confirm",
 } as const;
 
-const MODAL_COMPONENTS: any = {
+const MODAL_COMPONENTS = {
   [MODAL_TYPES.confirm]: ConfirmModal,
   [MODAL_TYPES.alert]: AlertModal,
 };
