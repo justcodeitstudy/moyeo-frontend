@@ -13,8 +13,6 @@ export default function useModal() {
   };
 
   return {
-    modal,
-    setModal,
     open,
     close,
   };

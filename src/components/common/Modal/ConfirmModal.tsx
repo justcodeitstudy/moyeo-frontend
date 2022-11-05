@@ -9,7 +9,7 @@ export interface ConfirmModalProps {
   cancelText?: string;
   confirmText?: string;
   // Todo: any제거
-  handleClose?: () => any;
+  onClose?: () => any;
   onConfirm?: () => any;
 }
 
@@ -18,14 +18,14 @@ export const ConfirmModal = ({
   content,
   confirmText = "확인",
   cancelText = "취소",
-  handleClose,
+  onClose,
   onConfirm,
 }: ConfirmModalProps) => {
   const { close } = useModal();
 
-  const onClose = () => {
-    if (handleClose) {
-      handleClose();
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
     }
     close();
   };
@@ -39,7 +39,7 @@ export const ConfirmModal = ({
   };
 
   return (
-    <Modal isOpen onClose={onClose}>
+    <Modal isOpen onClose={handleClose}>
       <Modal.Content>
         <ModalContentContainer>
           <TitleContainer>{title}</TitleContainer>
@@ -53,7 +53,7 @@ export const ConfirmModal = ({
             >
               {confirmText}
             </Button>
-            <Button onClick={onClose} width="100%">
+            <Button onClick={handleClose} width="100%">
               {cancelText}
             </Button>
           </ButtonContainer>
