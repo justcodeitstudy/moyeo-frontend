@@ -3,12 +3,8 @@ import styled from "styled-components";
 import { Search } from "./Search";
 import { PostList } from "components/common/PostList";
 import Image from "next/image";
-import { useExampleApi } from "queries/example";
 
 const Main = () => {
-  const { data: exampleResponse } = useExampleApi();
-  console.log(exampleResponse?.data);
-
   return (
     <>
       <SearchWrapper>

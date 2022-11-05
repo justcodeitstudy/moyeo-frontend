@@ -1,3 +1,4 @@
-export const exampleKeys = {
-  example: ["example"],
+export const userKeys = {
+  getUserMe: ["getUserMe"],
+  getUser: (userId: string) => ["getUser", userId],
 };
