@@ -1,8 +1,14 @@
 import React from "react";
-import { NextPage } from "next";
+import { Main } from "components/main";
+import { NextPageWithLayout } from "./_app";
+import MainLayout from "layouts/MainLayout";
 
-const Home: NextPage = () => {
-  return <div>moyeo-frontend</div>;
+const Index: NextPageWithLayout = () => {
+  return <Main />;
 };
 
-export default Home;
+Index.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
+};
+
+export default Index;
