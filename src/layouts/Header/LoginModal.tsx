@@ -3,11 +3,18 @@ import { Modal } from "jci-moyeo-design-system";
 import styled from "styled-components";
 import Image from "next/image";
 
+export type SnsType = "google" | "kakaotalk" | "github";
+
 type Props = {
-  onSelect: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onSelect: (sns: SnsType) => void;
 };
 const LoginModal = ({ onSelect }: Props) => {
-  const snsList = ["google", "kakaotalk", "github"];
+  const snsList: SnsType[] = ["google", "kakaotalk", "github"];
+
+  const handleSnsButtonClick = (selectedSns: SnsType) => {
+    onSelect(selectedSns);
+  };
 
   return (
     <LoginModalContent>
@@ -17,7 +24,10 @@ const LoginModal = ({ onSelect }: Props) => {
       </LoginModalTitleBox>
       <LoginModalSnsOptionBox>
         {snsList.map((sns) => (
-          <LoginModalSnsButton key={sns} onClick={onSelect}>
+          <LoginModalSnsButton
+            key={sns}
+            onClick={() => handleSnsButtonClick(sns)}
+          >
             <Image
               src={`/${sns}.svg`}
               alt={`${sns}-logo`}
