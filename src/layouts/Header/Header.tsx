@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Button, Icon, Modal } from "jci-moyeo-design-system";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -43,7 +44,18 @@ const Header = () => {
       kakaotalk: () => {
         Kakao.Auth.login({
           success: (response) => {
-            console.log(response);
+            // FIXME: kakao login test 코드
+            axios
+              .get(
+                `http://ec2-15-164-250-89.ap-northeast-2.compute.amazonaws.com:8080/oauth/token/kakao`,
+                {
+                  data: {
+                    accesskey: response.access_token,
+                  },
+                },
+              )
+              .then((res) => console.log(`success`, res))
+              .catch((err) => console.log(`failed`, err));
           },
           fail: (error) => {
             console.log(error);
