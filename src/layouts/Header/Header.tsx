@@ -46,12 +46,10 @@ const Header = () => {
           success: (response) => {
             // FIXME: kakao login test 코드
             axios
-              .get(
+              .post(
                 `http://ec2-15-164-250-89.ap-northeast-2.compute.amazonaws.com:8080/oauth/token/kakao`,
                 {
-                  data: {
-                    accesskey: response.access_token,
-                  },
+                  accesskey: response.access_token,
                 },
               )
               .then((res) => console.log(`success`, res))
