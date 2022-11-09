@@ -25,9 +25,14 @@ const Header = () => {
   const router = useRouter();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleWriteButtonClick = () => {
     router.push("/post/register");
+  };
+
+  const handleMyPageButtonClick = () => {
+    router.push("/mypage");
   };
 
   const handleLoginClick = () => {
@@ -57,7 +62,7 @@ const Header = () => {
         </a>
       </Link>
 
-      <ControlBox>
+      <PcControlBox>
         <WriteButton
           color="general"
           variants="outlined"
@@ -100,7 +105,7 @@ const Header = () => {
             onClose={() => setIsProfileOpen(false)}
           >
             <OptionUl>
-              <li>마이페이지</li>
+              <li onClick={handleMyPageButtonClick}>마이페이지</li>
               <li>로그아웃</li>
             </OptionUl>
           </Popover>
@@ -119,7 +124,37 @@ const Header = () => {
         <Modal isOpen={isSignup} onClose={() => setIsSignup(false)} dim="blur">
           <SignupModal />
         </Modal>
-      </ControlBox>
+      </PcControlBox>
+
+      <MobileControlBox>
+        <Popover
+          anchorPosition={{
+            x: 0,
+            y: 8,
+          }}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          opener={
+            <MobileMenuContainer onClick={() => setIsMobileMenuOpen(true)}>
+              <Icon name="hamburger" />
+            </MobileMenuContainer>
+          }
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
+        >
+          <OptionUl>
+            <li onClick={handleMyPageButtonClick}>마이페이지</li>
+            <li onClick={handleWriteButtonClick}>모집 글 작성하기</li>
+            <li>로그아웃</li>
+          </OptionUl>
+        </Popover>
+      </MobileControlBox>
     </StyledHeader>
   );
 };
@@ -131,6 +166,10 @@ const StyledHeader = styled.header`
   padding: 20px 120px;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors.general["300"]};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    padding: 16px 20px;
+  }
 `;
 
 const WriteButton = styled(Button)`
@@ -138,9 +177,28 @@ const WriteButton = styled(Button)`
   column-gap: 4px;
 `;
 
-const ControlBox = styled.div`
+const PcControlBox = styled.div`
   display: flex;
+  align-items: center;
   column-gap: 12px;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    display: none;
+  }
+`;
+
+const MobileControlBox = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+
+  @media (min-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
+    display: none;
+  }
+`;
+
+const MobileMenuContainer = styled.div`
+  cursor: pointer;
 `;
 
 const ProfileBox = styled.div`
