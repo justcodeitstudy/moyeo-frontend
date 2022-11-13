@@ -13,6 +13,7 @@ import { GlobalStyle, Theme } from "jci-moyeo-design-system";
 import "../styles/toastui.css";
 import { NextPage, NextPageContext } from "next";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { GlobalModal } from "components/common/Modal";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -49,7 +50,10 @@ function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
       <QueryClientProvider client={queryClient}>
         {process.env.NODE_ENV === "development" && <ReactQueryDevtools />}
         <Hydrate state={dehydratedState}>
-          <RecoilRoot>{getLayout(<Component {...rest} />)}</RecoilRoot>
+          <RecoilRoot>
+            {getLayout(<Component {...rest} />)}
+            <GlobalModal />
+          </RecoilRoot>
         </Hydrate>
       </QueryClientProvider>
     </ThemeProvider>
