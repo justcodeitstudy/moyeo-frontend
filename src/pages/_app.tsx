@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RecoilRoot } from "recoil";
 import {
   DehydratedState,
@@ -14,6 +14,12 @@ import "../styles/toastui.css";
 import { NextPage, NextPageContext } from "next";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GlobalModal } from "components/common/Modal";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -43,6 +49,13 @@ function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  useEffect(() => {
+    const kakaoKey = process.env.NEXT_PUBLIC_KAKAO_KEY;
+    if (kakaoKey && Kakao && !Kakao.isInitialized()) {
+      Kakao.init(kakaoKey);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={Theme}>

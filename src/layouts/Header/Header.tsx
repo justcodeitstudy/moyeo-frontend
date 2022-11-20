@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginModal from "./LoginModal";
+import LoginModal, { SnsType } from "./LoginModal";
 import SignupModal from "./SignupModal";
 
 const Popover = dynamic(
@@ -43,9 +43,23 @@ const Header = () => {
     setIsLoginModalOpen(false);
   };
 
-  const handleSnsSelect = () => {
+  const handleSnsSelect = (sns: SnsType) => {
+    const socialLoginMap: Record<SnsType, () => void> = {
+      kakaotalk: () => {
+        // TODO Redirect URI 추가
+        Kakao.Auth.authorize({});
+      },
+      github: () => {
+        console.log(`github login`);
+      },
+      google: () => {
+        console.log(`google login`);
+      },
+    };
+
+    socialLoginMap[sns]();
     setIsLoginModalOpen(false);
-    setIsSignup(true);
+    // setIsSignup(true);
   };
 
   useEffect(() => {
