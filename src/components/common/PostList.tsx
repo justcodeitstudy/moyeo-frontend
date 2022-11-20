@@ -3,49 +3,40 @@ import styled from "styled-components";
 import { Grid } from "./Grid";
 import { PostCard } from "./PostCard";
 import { Chip, Icon, Theme } from "jci-moyeo-design-system";
-
-// NOTE: 임시로 만들어놓음 변경될 수 있음
-export interface Skill {
-  id: number;
-  name: string;
-}
-
-// NOTE: 임시로 만들어놓음 변경될 수 있음
-export interface PostListResponse {
-  id: number;
-  title: string;
-  type: "프로젝트" | "스터디" | "미지정";
-  status: "모집중" | "모집완료";
-  viewCount: number;
-  skills: Skill[];
-  isScrap: boolean;
-  createdAt: string;
-}
+import { Content } from "../../models/post";
 
 export interface PostListProps {
-  postList: PostListResponse[]; // TODO: API의 응답 List로 수정
+  postList?: Content[]; // TODO: API의 응답 List로 수정
 }
 
 export const PostList = ({ postList }: PostListProps) => {
   return (
     <GridOverride>
-      {postList.map(
-        ({ id, title: postTitle, viewCount, skills, isScrap, createdAt }) => {
+      {postList?.map(
+        ({
+          title: PostTitle,
+          postId,
+          viewCount,
+          isScrapped,
+          skillList,
+          createdAt,
+        }: Content) => {
+          // TODO 스크랩 토큰 필요
           const title = (
             <>
-              <span>{postTitle}</span>
-              {isScrap && (
+              {PostTitle}
+              {isScrapped && (
                 <Icon name="scrapOn" color={Theme.colors.primary[500]} />
               )}
             </>
           );
           const content = `${createdAt} · 조회 ${viewCount}`;
-          const footer = skills.map(({ id, name }) => (
-            <Chip key={id} color="basic" variants="pill" label={name} />
+          const footer = skillList?.map(({ name }, index) => (
+            <Chip key={index} color="basic" variants="pill" label={name} />
           ));
 
           return (
-            <Grid.Item key={id}>
+            <Grid.Item key={postId}>
               <PostCard title={title} content={content} footer={footer} />
             </Grid.Item>
           );
