@@ -12,6 +12,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle, Theme } from "jci-moyeo-design-system";
 import "../styles/toastui.css";
 import { NextPage, NextPageContext } from "next";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GlobalModal } from "components/common/Modal";
 
 declare global {
@@ -60,6 +61,7 @@ function MoyeoApp({ Component, pageProps }: AppPropsWithLayout) {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
+        {process.env.NODE_ENV === "development" && <ReactQueryDevtools />}
         <Hydrate state={dehydratedState}>
           <RecoilRoot>
             {getLayout(<Component {...rest} />)}
