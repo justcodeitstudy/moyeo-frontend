@@ -1,42 +1,29 @@
 import { Chip, Icon, SearchInput, Switch } from "jci-moyeo-design-system";
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { removeUndefined } from "../../utils/removeUndefined";
 
 const skills = [
-  {
-    value: "Javascript",
-    label: "Javascript",
-  },
-  {
-    value: "TypeScript",
-    label: "TypeScript",
-  },
-  {
-    value: "React",
-    label: "React",
-  },
-  {
-    value: "Vue",
-    label: "Vue",
-  },
-  {
-    value: "Java",
-    label: "Java",
-  },
-  {
-    value: "Spring",
-    label: "Spring",
-  },
-  {
-    value: "Nodejs",
-    label: "Nodejs",
-  },
+  { id: 1, value: "Javascript", label: "Javascript" },
+  { id: 2, value: "TypeScript", label: "TypeScript" },
+  { id: 3, value: "React", label: "React" },
+  { id: 4, value: "Vue", label: "Vue" },
+  { id: 5, value: "Java", label: "Java" },
+  { id: 6, value: "Spring", label: "Spring" },
+  { id: 7, value: "Nodejs", label: "Nodejs" },
 ];
 
 export const Search = () => {
+  const { push, query } = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const [checked, setChecked] = useState(true);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [skillIds, setSkillIds] = useState<number[]>([]);
+  const [title, setTitle] = useState("");
+
+  const handleSearchChange = useCallback((searchValue: string) => {
+    setTitle(searchValue);
+  }, []);
 
   const handleChange = useCallback(
     (value: boolean) => {
@@ -46,30 +33,41 @@ export const Search = () => {
   );
 
   const handleSelect = useCallback(
-    (value: string) => {
-      if (selectedSkills?.includes(value)) {
-        return setSelectedSkills(selectedSkills?.filter((x) => x !== value));
+    (id: number) => {
+      if (skillIds?.includes(id)) {
+        return setSkillIds(skillIds?.filter((x) => x !== id));
       }
-
-      return setSelectedSkills(selectedSkills?.concat(value));
+      return setSkillIds(skillIds?.concat(id));
     },
-    [selectedSkills, setSelectedSkills],
+    [skillIds],
   );
 
   const isSelected = useCallback(
-    (value: string) => {
-      return selectedSkills?.includes(value);
+    (id: number) => {
+      return skillIds?.includes(id);
     },
-    [selectedSkills],
+    [skillIds],
   );
 
-  const handleDelete = (
-    e: React.MouseEvent<HTMLDivElement>,
-    label?: string,
-  ) => {
-    const value = skills?.find((skill) => skill.label === label)?.value;
-    setSelectedSkills(selectedSkills?.filter((x) => x !== value));
+  const handleDelete = (e: React.MouseEvent<HTMLDivElement>, id?: number) => {
+    const skillId = skills?.find((skill) => skill.id === id)?.id;
+    setSkillIds(skillIds?.filter((x) => x !== skillId));
   };
+
+  useEffect(() => {
+    push(
+      {
+        query: removeUndefined({
+          ...query,
+          title,
+          skillIds,
+          status: checked ? "RECRUITING" : undefined,
+        }),
+      },
+      undefined,
+      { scroll: false },
+    );
+  }, [checked, skillIds, title]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -80,7 +78,12 @@ export const Search = () => {
   return (
     <>
       <MobileSearchContainer>
-        <SearchInput width="224px" placeholder="프로젝트 검색하기" />
+        <SearchInput
+          width="224px"
+          placeholder="프로젝트 검색하기"
+          value={title}
+          onSearch={handleSearchChange}
+        />
         <Switch
           checked={checked}
           onChange={handleChange}
@@ -90,20 +93,25 @@ export const Search = () => {
       </MobileSearchContainer>
 
       <PcSearchContainer>
-        <SearchInput width="432px" placeholder="프로젝트 검색하기" />
+        <SearchInput
+          width="432px"
+          placeholder="프로젝트 검색하기"
+          value={title}
+          onSearch={handleSearchChange}
+        />
         <FilterContainer>
           <SkillChipContainer>
             <StyledIcon name="filter" size={25} />
-            {skills.map(({ value, label }) => {
+            {skills.map(({ id, label }) => {
               return (
-                <StyledChipContainer key={value}>
+                <StyledChipContainer key={id}>
                   <Chip
-                    color={isSelected(value) ? "active" : "basic"}
-                    onClick={() => handleSelect(value)}
-                    onDelete={handleDelete}
+                    color={isSelected(id) ? "active" : "basic"}
+                    onClick={() => handleSelect(id)}
+                    onDelete={(e) => handleDelete(e, id)}
                     label={label}
                     deleteIcon={
-                      isSelected(value) && (
+                      isSelected(id) && (
                         <Icon name="cancelWithCircle" size={16} />
                       )
                     }
