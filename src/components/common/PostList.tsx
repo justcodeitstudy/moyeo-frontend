@@ -21,13 +21,19 @@ export const PostList = ({ postList }: PostListProps) => {
           skillList,
           createdAt,
         }: Content) => {
-          // TODO 스크랩 토큰 필요
+          // TODO 스크랩
           const title = (
             <>
               {PostTitle}
-              {isScrapped && (
-                <Icon name="scrapOn" color={Theme.colors.primary[500]} />
-              )}
+              <Icon
+                name={isScrapped ? "scrapOn" : "scrapOff"}
+                size={32}
+                color={
+                  isScrapped
+                    ? Theme.colors.primary[500]
+                    : Theme.colors.general.white["200"]
+                }
+              />
             </>
           );
           const content = `${createdAt} · 조회 ${viewCount}`;

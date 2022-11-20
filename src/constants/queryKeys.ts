@@ -7,3 +7,7 @@ export const postKeys = {
   post: ["post"],
   postWithQuery: "post",
 };
+
+export const skillKeys = {
+  skill: ["skill"],
+};

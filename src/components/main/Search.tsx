@@ -3,18 +3,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { removeUndefined } from "../../utils/removeUndefined";
-
-const skills = [
-  { id: 1, value: "Javascript", label: "Javascript" },
-  { id: 2, value: "TypeScript", label: "TypeScript" },
-  { id: 3, value: "React", label: "React" },
-  { id: 4, value: "Vue", label: "Vue" },
-  { id: 5, value: "Java", label: "Java" },
-  { id: 6, value: "Spring", label: "Spring" },
-  { id: 7, value: "Nodejs", label: "Nodejs" },
-];
+import { useGetSkill } from "../../queries/skill";
 
 export const Search = () => {
+  const { data: skills } = useGetSkill(true);
   const { push, query } = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const [checked, setChecked] = useState(true);
@@ -61,7 +53,7 @@ export const Search = () => {
           ...query,
           title,
           skillIds,
-          status: checked ? "RECRUITING" : undefined,
+          status: checked ? undefined : "RECRUITING",
         }),
       },
       undefined,
@@ -102,14 +94,14 @@ export const Search = () => {
         <FilterContainer>
           <SkillChipContainer>
             <StyledIcon name="filter" size={25} />
-            {skills.map(({ id, label }) => {
+            {skills?.map(({ id, name }) => {
               return (
                 <StyledChipContainer key={id}>
                   <Chip
                     color={isSelected(id) ? "active" : "basic"}
                     onClick={() => handleSelect(id)}
                     onDelete={(e) => handleDelete(e, id)}
-                    label={label}
+                    label={name}
                     deleteIcon={
                       isSelected(id) && (
                         <Icon name="cancelWithCircle" size={16} />
