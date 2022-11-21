@@ -8,6 +8,7 @@ import styled from "styled-components";
 import LoginModal, { SnsType } from "./LoginModal";
 import SignupModal from "./SignupModal";
 import { useLoginStatus } from "../../hooks/useLoginStatus";
+import useLoginModal from "../../hooks/useLoginModal";
 
 const Popover = dynamic(
   () => import("jci-moyeo-design-system").then((r) => r.Popover),
@@ -20,11 +21,15 @@ const Header = () => {
   const isLogin = useLoginStatus();
   const [hasMounted, setHasMounted] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
-
   const router = useRouter();
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const {
+    isLoginModalOpen,
+    handleLoginClick,
+    handleLoginModalClose,
+    handleSnsSelect,
+  } = useLoginModal();
 
   const handleWriteButtonClick = () => {
     router.push("/post/register");
@@ -32,39 +37,6 @@ const Header = () => {
 
   const handleMyPageButtonClick = () => {
     router.push("/mypage");
-  };
-
-  const handleLoginClick = () => {
-    setIsLoginModalOpen(true);
-  };
-
-  const handleLoginModalClose = () => {
-    setIsLoginModalOpen(false);
-  };
-
-  const handleSnsSelect = (sns: SnsType) => {
-    const socialLoginMap: Record<SnsType, () => void> = {
-      kakaotalk: () => {
-        router.push({
-          pathname: "https://kauth.kakao.com/oauth/authorize",
-          query: {
-            response_type: "code",
-            client_id: process.env.NEXT_PUBLIC_KAKAO_KEY,
-            // TODO Redirect URI 추가
-            redirect_uri: "http://localhost:8080/callback/kakao",
-          },
-        });
-      },
-      github: () => {
-        console.log(`github login`);
-      },
-      google: () => {
-        console.log(`google login`);
-      },
-    };
-
-    socialLoginMap[sns]();
-    setIsLoginModalOpen(false);
   };
 
   useEffect(() => {

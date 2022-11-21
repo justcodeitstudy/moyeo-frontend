@@ -1,5 +1,5 @@
 import { Button, Chip, Select, TextInput } from "jci-moyeo-design-system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Email,
@@ -7,53 +7,44 @@ import {
   UserNickName,
   UserProfileContainer,
   SubCategoryText,
-  myInfo,
 } from "./Info";
 import { useFormik } from "formik";
 import Avatar from "components/common/Avatar";
 import dynamic from "next/dynamic";
 import Section from "components/common/Section";
+import { MyProfileResDTO } from "../../models/user";
+import { useGetSkill } from "../../queries/skill";
+import { GetSkillRes } from "../../models/skill";
 
 const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
 });
 
 interface InfoFormProps {
+  myInfo?: MyProfileResDTO;
   onUpdate: () => void;
 }
 
 const { Option } = Select;
 
-const skills = [
-  {
-    id: 1,
-    value: "javascript",
-    label: "javascript",
-  },
-  {
-    id: 2,
-    value: "typescript",
-    label: "typescript",
-  },
-  {
-    id: 3,
-    value: "react",
-    label: "react",
-  },
-  {
-    id: 4,
-    value: "vue",
-    label: "vue",
-  },
-];
+const initialValue = {
+  skillIds: [],
+  nickname: "",
+  introduction: "",
+  email: "",
+  picture: "",
+};
 
-export const InfoForm = ({ onUpdate }: InfoFormProps) => {
-  const [optionValues, setOptionValues] = useState<string[]>([]);
+export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
+  const { data: skills } = useGetSkill();
   const [optionList, setOptionList] = useState(skills);
+  const [mySkillList, setMySkillList] = useState<string[]>([]);
+
+  console.log(mySkillList);
 
   const { handleSubmit, submitForm, handleChange, setFieldValue, values } =
     useFormik({
-      initialValues: myInfo,
+      initialValues: myInfo || initialValue,
       onSubmit: (values, actions) => {
         console.log({ values, actions });
         alert(JSON.stringify(values, null, 2));
@@ -63,7 +54,7 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
     });
 
   const handleSelectChange = (value: string) => {
-    const multiSelectValues = values.skills ?? [];
+    const multiSelectValues = values.skillIds ?? [];
     const isIncludeValue = multiSelectValues.includes(value);
 
     if (isIncludeValue) {
@@ -84,11 +75,11 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
     e: React.MouseEvent<HTMLDivElement>,
     label?: string,
   ) => {
-    const value = skills?.find((skill) => skill.label === label)?.value;
+    const value = skills?.find((skill) => skill.name === label);
 
     setFieldValue(
       "skills",
-      values.skills.filter((x) => x !== value),
+      values.skillIds.filter((x) => x !== value),
     );
   };
 
@@ -107,7 +98,7 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
       <ProfileContainer>
         <UserProfileContainer>
           <Avatar id="" />
-          <UserNickName>{myInfo.nickname}</UserNickName>
+          <UserNickName>{myInfo?.nickname}</UserNickName>
         </UserProfileContainer>
         <PcButton
           variants="filled"
@@ -118,47 +109,47 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
           수정 완료
         </PcButton>
       </ProfileContainer>
-      <Email>연결 계정 · {myInfo.email}</Email>
+      <Email>연결 계정 · {myInfo?.email}</Email>
       <SubCategoryText>닉네임 수정</SubCategoryText>
       <StyledInputContainer>
         <StyledTextInput
           id="nickname"
           name="nickname"
           onChange={handleChange}
-          value={values.nickname}
+          value={values?.nickname}
           message="한영, 최대 10글자 이내, 공백 특수문자 불가"
         />
       </StyledInputContainer>
       <SubCategoryText>기술 스택 수정</SubCategoryText>
       <StyledInputContainer>
         <ChipContainer>
-          {values.skills.map((value) => {
+          {mySkillList?.map((value) => {
             return (
               <StyledChip
                 key={value}
                 color="basic"
                 variants="pill"
                 onDelete={handleDelete}
-                label={skills.find((skill) => skill.value === value)?.label}
+                label={value}
               />
             );
           })}
         </ChipContainer>
         <Select
           isMulti
-          value={values.skills}
+          value={["asdf"]}
           onSelect={handleSelectChange}
-          onChange={setOptionValues}
+          onChange={setMySkillList}
           onClose={handleSelectClose}
           placeholder="태그를 입력해주세요."
           onSearchInputChange={handleSearchInputChange}
         >
-          {optionList.length === 0 && (
+          {optionList?.length === 0 && (
             <TagNotFoundText>검색된 태그가 없습니다.</TagNotFoundText>
           )}
-          {optionList.map(({ value, label }) => (
-            <Option key={value} value={value}>
-              {label}
+          {optionList?.map(({ id, name }) => (
+            <Option key={id} value={name}>
+              {name}
             </Option>
           ))}
         </Select>
@@ -166,7 +157,7 @@ export const InfoForm = ({ onUpdate }: InfoFormProps) => {
       <SubCategoryText>자기소개</SubCategoryText>
       <Section>
         <InfoText>
-          <Viewer initialValue={myInfo.info} />
+          <Viewer initialValue={myInfo?.introduction} />
         </InfoText>
       </Section>
       <MobileButton

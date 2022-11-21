@@ -5,20 +5,19 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { InfoForm } from "./InfoForm";
+import { MyProfileResDTO } from "../../models/user";
+import { useGetSkill } from "../../queries/skill";
 
 const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
 });
 
-export const myInfo = {
-  nickname: "모요미",
-  email: "moyomi@gmail.com",
-  skills: ["typescript", "react"],
-  info: `제 인생에서 1차적인 목표인 장기복무 합격이 올해 이루어졌기 때문에 한동안 많은 생각을 하면서 다음 목표를 정하려고 노력했습니다.
-그래서 생각한 것은 상사 진급 및 학사학위 취득입니다.`,
-};
+interface InfoProps {
+  myInfo?: MyProfileResDTO;
+}
 
-export const Info = () => {
+export const Info = ({ myInfo }: InfoProps) => {
+  const { data: skills } = useGetSkill();
   const [showInfoForm, setShowInfoForm] = useState(false);
 
   const handleShowInfoForm = () => {
@@ -29,16 +28,20 @@ export const Info = () => {
     setShowInfoForm(false);
   };
 
+  const getUserSkills = () => {
+    return skills?.filter((skill) => myInfo?.skillIds.includes(skill.id));
+  };
+
   return (
     <InfoContainer>
       {showInfoForm ? (
-        <InfoForm onUpdate={handleUpdate} />
+        <InfoForm myInfo={myInfo} onUpdate={handleUpdate} />
       ) : (
         <>
           <ProfileContainer>
             <UserProfileContainer>
               <Avatar id="" />
-              <UserNickName>{myInfo.nickname}</UserNickName>
+              <UserNickName>{myInfo?.nickname}</UserNickName>
             </UserProfileContainer>
             <PcButtonContainer>
               <Button
@@ -50,20 +53,22 @@ export const Info = () => {
               </Button>
             </PcButtonContainer>
           </ProfileContainer>
-          <Email>연결 계정 · {myInfo.email}</Email>
+          <Email>연결 계정 · {myInfo?.email}</Email>
           <SubCategoryText>기술 스택</SubCategoryText>
-          {myInfo.skills.map((skill) => (
-            <StyledChip
-              key={skill}
-              color="basic"
-              variants="pill"
-              label={skill}
-            />
-          ))}
+          {getUserSkills()?.map((skill) => {
+            return (
+              <StyledChip
+                key={skill.id}
+                color="basic"
+                variants="pill"
+                label={skill.name}
+              />
+            );
+          })}
           <SubCategoryText>자기 소개</SubCategoryText>
           <Section>
             <InfoText>
-              <Viewer initialValue={myInfo.info} />
+              <Viewer initialValue={myInfo?.introduction} />
             </InfoText>
           </Section>
           <MobileButtonContainer>

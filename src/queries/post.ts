@@ -1,19 +1,23 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { postKeys } from "../constants/queryKeys";
-import { getPost } from "../api/post";
+import { getPost, getPostMe } from "../api/post";
 import { useRouter } from "next/router";
-import { GetPostRequest } from "../models/post";
 
-export const useGetPost = (params: GetPostRequest) => {
-  return useQuery(postKeys.post, () => getPost(params), {});
+export const useGetPostMe = () => {
+  return useQuery(postKeys.postMe, getPostMe, {});
 };
 
 export const useInfiniteGetPost = () => {
   const router = useRouter();
   return useInfiniteQuery(
-    [postKeys.postWithQuery, router.query],
-    ({ pageParam = 1 }) => getPost({ page: pageParam, ...router.query }),
-
+    postKeys.postWithQuery(router.query),
+    async ({ pageParam = 1 }) => {
+      const response = await getPost({ page: pageParam, ...router.query });
+      return {
+        ...response,
+        pageParam,
+      };
+    },
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.last) {

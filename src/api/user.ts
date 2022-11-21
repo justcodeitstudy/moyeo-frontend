@@ -6,14 +6,14 @@ import { EditProfileReqDTO, MyProfileResDTO, ProfileResDTO } from "models/user";
  * 내 프로필 조회 API
  */
 export const getUserMe = (): Promise<AxiosResponse<MyProfileResDTO>> => {
-  return client.get(`/users/me`);
+  return client.get(`/user/me`);
 };
 
 /**
  * 내 프로필 수정 API
  */
 export const patchUserMe = (payload: EditProfileReqDTO) => {
-  return client.patch(`/users/me`, payload);
+  return client.patch(`/user/me`, payload);
 };
 
 /**
@@ -22,5 +22,5 @@ export const patchUserMe = (payload: EditProfileReqDTO) => {
 export const getUserDetail = (
   userId: string,
 ): Promise<AxiosResponse<ProfileResDTO>> => {
-  return client.get(`/users/${userId}`);
+  return client.get(`/user/${userId}`);
 };

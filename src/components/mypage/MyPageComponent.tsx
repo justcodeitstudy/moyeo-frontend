@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Info } from "./Info";
 import { ProjectStudy } from "./ProjectStudy";
 import { Scrap } from "./Scrap";
+import { useGetUserMe } from "../../queries/user";
 
 const myPageMenus = [
   {
@@ -24,6 +25,7 @@ const myPageMenus = [
 ];
 
 export const MyPageComponent = () => {
+  const { data: user } = useGetUserMe();
   const [selected, setSelected] = useState("info");
 
   const handleSelect = useCallback(
@@ -54,7 +56,7 @@ export const MyPageComponent = () => {
       </TabContainer>
       {selected === "info" && (
         <TabPanel>
-          <Info />
+          <Info myInfo={user?.data} />
         </TabPanel>
       )}
       {selected === "project" && (

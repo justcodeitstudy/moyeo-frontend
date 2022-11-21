@@ -6,14 +6,11 @@ import { userKeys } from "constants/queryKeys";
  *
  * user-controller hooks
  */
-const useUser = () => {
-  return {
-    useGetUserMe: () => useQuery(userKeys.getUserMe, getUserMe),
-    usePatchUserMe: () => useMutation(patchUserMe),
-    useGetUserDetail: (userId: string) => {
-      return useQuery(userKeys.getUser(userId), () => getUserDetail(userId));
-    },
-  };
-};
 
-export default useUser;
+export const useGetUserMe = () => useQuery(userKeys.getUserMe, getUserMe);
+
+export const usePatchUserMe = () => useMutation(patchUserMe);
+
+export const useGetUserDetail = (userId: string) => {
+  return useQuery(userKeys.getUser(userId), () => getUserDetail(userId));
+};

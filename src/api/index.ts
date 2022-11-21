@@ -8,9 +8,10 @@ const client = axios.create({
 
 client.interceptors.request.use(
   async (config) => {
+    const nonRequestToken = ["/skill", "/oauth/auth/kakao"];
     const accessToken = CustomCookies.getCookies("accessToken");
 
-    if (accessToken) {
+    if (accessToken && !nonRequestToken.includes(config.url as string)) {
       config.headers = {
         "X-MOYEO-AUTH-TOKEN": `${accessToken}`,
       };

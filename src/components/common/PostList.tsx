@@ -2,14 +2,58 @@ import React from "react";
 import styled from "styled-components";
 import { Grid } from "./Grid";
 import { PostCard } from "./PostCard";
-import { Chip, Icon, Theme } from "jci-moyeo-design-system";
+import { Chip, Icon, Modal, Theme } from "jci-moyeo-design-system";
 import { Content } from "../../models/post";
+import { useDeleteScraps, usePostScraps } from "../../queries/scraps";
+import { useLoginStatus } from "../../hooks/useLoginStatus";
+import LoginModal from "../../layouts/Header/LoginModal";
+import useLoginModal from "../../hooks/useLoginModal";
+import { postKeys } from "../../constants/queryKeys";
+import { useRouter } from "next/router";
+import { useQueryClient } from "@tanstack/react-query";
 
 export interface PostListProps {
-  postList?: Content[]; // TODO: API의 응답 List로 수정
+  postList?: Content[];
 }
 
 export const PostList = ({ postList }: PostListProps) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const isLogin = useLoginStatus();
+  const {
+    isLoginModalOpen,
+    handleLoginClick,
+    handleLoginModalClose,
+    handleSnsSelect,
+  } = useLoginModal();
+  const { mutate: postScraps } = usePostScraps();
+  const { mutate: deleteScraps } = useDeleteScraps();
+
+  const invalidateQueries = () => {
+    return queryClient.invalidateQueries(postKeys.postWithQuery(router.query));
+  };
+
+  const handleScraps = (postId: string, isScrapped: boolean) => {
+    if (!isLogin) {
+      handleLoginClick();
+    }
+
+    if (isScrapped) {
+      return deleteScraps(postId, {
+        onSuccess: async () => {
+          await invalidateQueries();
+        },
+      });
+    }
+    if (!isScrapped) {
+      return postScraps(postId, {
+        onSuccess: async () => {
+          await invalidateQueries();
+        },
+      });
+    }
+  };
+
   return (
     <GridOverride>
       {postList?.map(
@@ -21,7 +65,6 @@ export const PostList = ({ postList }: PostListProps) => {
           skillList,
           createdAt,
         }: Content) => {
-          // TODO 스크랩
           const title = (
             <>
               {PostTitle}
@@ -33,6 +76,7 @@ export const PostList = ({ postList }: PostListProps) => {
                     ? Theme.colors.primary[500]
                     : Theme.colors.general.white["200"]
                 }
+                onClick={() => handleScraps(String(postId), isScrapped)}
               />
             </>
           );
@@ -48,6 +92,13 @@ export const PostList = ({ postList }: PostListProps) => {
           );
         },
       )}
+      <Modal
+        isOpen={isLoginModalOpen}
+        onClose={handleLoginModalClose}
+        dim="blur"
+      >
+        <LoginModal onSelect={handleSnsSelect} />
+      </Modal>
     </GridOverride>
   );
 };
