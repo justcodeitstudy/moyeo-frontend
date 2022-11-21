@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { InfoForm } from "./InfoForm";
 import { MyProfileResDTO } from "../../models/user";
-import { useGetSkill } from "../../queries/skill";
 
 const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
@@ -17,7 +16,6 @@ interface InfoProps {
 }
 
 export const Info = ({ myInfo }: InfoProps) => {
-  const { data: skills } = useGetSkill();
   const [showInfoForm, setShowInfoForm] = useState(false);
 
   const handleShowInfoForm = () => {
@@ -26,10 +24,6 @@ export const Info = ({ myInfo }: InfoProps) => {
 
   const handleUpdate = () => {
     setShowInfoForm(false);
-  };
-
-  const getUserSkills = () => {
-    return skills?.filter((skill) => myInfo?.skillIds.includes(skill.id));
   };
 
   return (
@@ -55,7 +49,7 @@ export const Info = ({ myInfo }: InfoProps) => {
           </ProfileContainer>
           <Email>연결 계정 · {myInfo?.email}</Email>
           <SubCategoryText>기술 스택</SubCategoryText>
-          {getUserSkills()?.map((skill) => {
+          {myInfo?.skillIds.map((skill) => {
             return (
               <StyledChip
                 key={skill.id}

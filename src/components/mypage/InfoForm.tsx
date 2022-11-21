@@ -14,7 +14,9 @@ import dynamic from "next/dynamic";
 import Section from "components/common/Section";
 import { MyProfileResDTO } from "../../models/user";
 import { useGetSkill } from "../../queries/skill";
-import { GetSkillRes } from "../../models/skill";
+import { usePatchUserMe } from "../../queries/user";
+import { useQueryClient } from "@tanstack/react-query";
+import { userKeys } from "../../constants/queryKeys";
 
 const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
@@ -27,7 +29,9 @@ interface InfoFormProps {
 
 const { Option } = Select;
 
-const initialValue = {
+type InitialValueType = MyProfileResDTO;
+
+const initialValue: InitialValueType = {
   skillIds: [],
   nickname: "",
   introduction: "",
@@ -36,35 +40,53 @@ const initialValue = {
 };
 
 export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
+  const queryClient = useQueryClient();
   const { data: skills } = useGetSkill();
+  const { mutate: postUserMeMutate } = usePatchUserMe();
   const [optionList, setOptionList] = useState(skills);
-  const [mySkillList, setMySkillList] = useState<string[]>([]);
 
-  console.log(mySkillList);
+  useEffect(() => {
+    setOptionList(skills);
+  }, [skills]);
 
   const { handleSubmit, submitForm, handleChange, setFieldValue, values } =
     useFormik({
       initialValues: myInfo || initialValue,
       onSubmit: (values, actions) => {
-        console.log({ values, actions });
-        alert(JSON.stringify(values, null, 2));
+        const { nickname, introduction, skillIds } = values;
+        postUserMeMutate(
+          {
+            nickname,
+            introduction,
+            skillIds: skillIds.map((skill) => skill.id),
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries(userKeys.getUserMe);
+              onUpdate();
+            },
+          },
+        );
         actions.setSubmitting(false);
-        onUpdate();
       },
     });
 
   const handleSelectChange = (value: string) => {
-    const multiSelectValues = values.skillIds ?? [];
-    const isIncludeValue = multiSelectValues.includes(value);
+    const arrValue = optionList?.filter((skill) => skill.name === value);
+    const multiSelectValues = values.skillIds;
+    const isIncludeValue = multiSelectValues.some(
+      (skill) => skill.name === value,
+    );
 
     if (isIncludeValue) {
       return setFieldValue(
-        "skills",
-        multiSelectValues.filter((x) => x !== value),
+        "skillIds",
+        multiSelectValues.filter((x) => x.name !== value),
       );
     }
-
-    setFieldValue("skills", multiSelectValues.concat(value));
+    if (arrValue) {
+      setFieldValue("skillIds", [...multiSelectValues, ...arrValue]);
+    }
   };
 
   const handleSelectClose = () => {
@@ -75,11 +97,9 @@ export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
     e: React.MouseEvent<HTMLDivElement>,
     label?: string,
   ) => {
-    const value = skills?.find((skill) => skill.name === label);
-
     setFieldValue(
-      "skills",
-      values.skillIds.filter((x) => x !== value),
+      "skillIds",
+      values.skillIds.filter((x) => x.name !== label),
     );
   };
 
@@ -90,7 +110,7 @@ export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
       return setOptionList(skills);
     }
 
-    setOptionList(skills.filter(({ label }) => label.includes(inputValue)));
+    setOptionList(skills?.filter(({ name }) => name.includes(inputValue)));
   };
 
   return (
@@ -123,32 +143,32 @@ export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
       <SubCategoryText>기술 스택 수정</SubCategoryText>
       <StyledInputContainer>
         <ChipContainer>
-          {mySkillList?.map((value) => {
+          {values.skillIds?.map((value, index) => {
             return (
               <StyledChip
-                key={value}
+                key={`${value.name}-${index}`}
                 color="basic"
                 variants="pill"
                 onDelete={handleDelete}
-                label={value}
+                label={value.name}
               />
             );
           })}
         </ChipContainer>
         <Select
           isMulti
-          value={["asdf"]}
+          value={values.skillIds}
           onSelect={handleSelectChange}
-          onChange={setMySkillList}
           onClose={handleSelectClose}
           placeholder="태그를 입력해주세요."
           onSearchInputChange={handleSearchInputChange}
+          maxHeight={200}
         >
           {optionList?.length === 0 && (
             <TagNotFoundText>검색된 태그가 없습니다.</TagNotFoundText>
           )}
-          {optionList?.map(({ id, name }) => (
-            <Option key={id} value={name}>
+          {optionList?.map(({ name }, index) => (
+            <Option key={`${name}-${index}`} value={name}>
               {name}
             </Option>
           ))}
@@ -175,6 +195,7 @@ export const InfoForm = ({ myInfo, onUpdate }: InfoFormProps) => {
 const ChipContainer = styled("div")`
   margin-bottom: 8px;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledChip = styled(Chip)`
@@ -198,7 +219,7 @@ const StyledTextInput = styled(TextInput)`
 `;
 
 const StyledInputContainer = styled("div")`
-  width: 343px;
+  width: 100%;
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.md - 1}px`}) {
     width: 100%;

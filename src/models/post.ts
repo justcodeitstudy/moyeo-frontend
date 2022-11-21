@@ -53,3 +53,18 @@ export interface GetPostRequest {
   size?: number;
   sort?: string;
 }
+
+export interface PostRequest {
+  title: string;
+  content: string;
+  postType: "PROJECT" | "STUDY";
+  progressType: "MIX" | "ONLINE" | "OFFLINE";
+  userId?: string;
+  contactInfo: string;
+  recruitmentList: {
+    id?: number;
+    recruitType: string;
+    recruitPeopleNum: number;
+  }[];
+  skillIds: number[];
+}

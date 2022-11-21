@@ -10,11 +10,6 @@ export const typeOptions = [
     value: "스터디",
     label: "스터디",
   },
-  {
-    id: 3,
-    value: "미지정",
-    label: "미지정",
-  },
 ];
 
 // 진행 방식
@@ -29,33 +24,38 @@ export const progressOptions = [
     value: "오프라인",
     label: "오프라인",
   },
+  {
+    id: 3,
+    value: "온/오프라인",
+    label: "온/오프라인",
+  },
 ];
 
 // 모집 분야
 export const fieldOptions = [
   {
     id: 1,
-    value: "백엔드",
+    value: "BACK_END",
     label: "백엔드",
   },
   {
     id: 2,
-    value: "프론트엔드",
+    value: "FRONT_END",
     label: "프론트엔드",
   },
   {
     id: 3,
-    value: "디자인",
+    value: "DESIGN",
     label: "디자인",
   },
   {
     id: 4,
-    value: "기획",
+    value: "PRODUCT",
     label: "기획",
   },
   {
     id: 5,
-    value: "기타",
+    value: "ETC",
     label: "기타",
   },
 ];

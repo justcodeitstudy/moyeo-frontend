@@ -1,9 +1,11 @@
+import { GetSkillRes } from "./skill";
+
 export interface MyProfileResDTO {
   email: string;
   picture: string;
   nickname: string;
   introduction: string;
-  skillIds: number[];
+  skillIds: GetSkillRes[];
 }
 
 export interface EditProfileReqDTO {
@@ -16,5 +18,5 @@ export interface ProfileResDTO {
   picture: string;
   nickname: string;
   introduction: string;
-  skillIds: number[];
+  skillIds: GetSkillRes[];
 }

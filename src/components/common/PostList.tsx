@@ -14,9 +14,10 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export interface PostListProps {
   postList?: Content[];
+  myPageScrap?: boolean;
 }
 
-export const PostList = ({ postList }: PostListProps) => {
+export const PostList = ({ postList, myPageScrap }: PostListProps) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const isLogin = useLoginStatus();
@@ -40,15 +41,15 @@ export const PostList = ({ postList }: PostListProps) => {
 
     if (isScrapped) {
       return deleteScraps(postId, {
-        onSuccess: async () => {
-          await invalidateQueries();
+        onSuccess: () => {
+          return invalidateQueries();
         },
       });
     }
     if (!isScrapped) {
       return postScraps(postId, {
-        onSuccess: async () => {
-          await invalidateQueries();
+        onSuccess: () => {
+          return invalidateQueries();
         },
       });
     }
@@ -68,16 +69,18 @@ export const PostList = ({ postList }: PostListProps) => {
           const title = (
             <>
               {PostTitle}
-              <Icon
-                name={isScrapped ? "scrapOn" : "scrapOff"}
-                size={32}
-                color={
-                  isScrapped
-                    ? Theme.colors.primary[500]
-                    : Theme.colors.general.white["200"]
-                }
-                onClick={() => handleScraps(String(postId), isScrapped)}
-              />
+              {!myPageScrap && (
+                <Icon
+                  name={isScrapped ? "scrapOn" : "scrapOff"}
+                  size={32}
+                  color={
+                    isScrapped
+                      ? Theme.colors.primary[500]
+                      : Theme.colors.general.white["200"]
+                  }
+                  onClick={() => handleScraps(String(postId), isScrapped)}
+                />
+              )}
             </>
           );
           const content = `${createdAt} · 조회 ${viewCount}`;

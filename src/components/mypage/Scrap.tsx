@@ -5,5 +5,5 @@ import { useGetScraps } from "../../queries/scraps";
 export const Scrap = () => {
   const { data: postList } = useGetScraps();
 
-  return <PostList postList={postList?.data} />;
+  return <PostList postList={postList?.data} myPageScrap />;
 };

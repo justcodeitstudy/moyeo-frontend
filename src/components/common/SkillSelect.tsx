@@ -21,10 +21,7 @@ const options = [
   },
 ];
 
-export type SkillSelectProps = Omit<
-  SelectProps<true>,
-  "isMulti" | "placeholder" | "onClose" | "onSearchInputChange" | "children"
->;
+export type SkillSelectProps = SelectProps;
 
 // eslint-disable-next-line react/display-name
 export const SkillSelect = memo((props: SkillSelectProps) => {

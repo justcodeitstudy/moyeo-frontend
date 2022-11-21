@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginModal, { SnsType } from "./LoginModal";
+import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 import { useLoginStatus } from "../../hooks/useLoginStatus";
 import useLoginModal from "../../hooks/useLoginModal";
+import { useDeleteAuth } from "../../queries/auth";
 
 const Popover = dynamic(
   () => import("jci-moyeo-design-system").then((r) => r.Popover),
@@ -30,6 +31,7 @@ const Header = () => {
     handleLoginModalClose,
     handleSnsSelect,
   } = useLoginModal();
+  const { mutate: logoutMutate } = useDeleteAuth();
 
   const handleWriteButtonClick = () => {
     router.push("/post/register");
@@ -42,6 +44,10 @@ const Header = () => {
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  const handleLogout = () => {
+    logoutMutate();
+  };
 
   if (!hasMounted) return null;
 
@@ -97,7 +103,7 @@ const Header = () => {
           >
             <OptionUl>
               <li onClick={handleMyPageButtonClick}>마이페이지</li>
-              <li>로그아웃</li>
+              <li onClick={handleLogout}>로그아웃</li>
             </OptionUl>
           </Popover>
         ) : (
@@ -142,7 +148,7 @@ const Header = () => {
           <OptionUl>
             <li onClick={handleMyPageButtonClick}>마이페이지</li>
             <li onClick={handleWriteButtonClick}>모집 글 작성하기</li>
-            <li>로그아웃</li>
+            <li onClick={handleLogout}>로그아웃</li>
           </OptionUl>
         </Popover>
       </MobileControlBox>

@@ -1,51 +1,46 @@
-import React, { forwardRef, memo } from "react";
-import {
-  Editor as TuiEditor,
-  EditorProps as TuiEditorProps,
-} from "@toast-ui/react-editor";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-
 import "@toast-ui/editor/dist/toastui-editor.css";
-import "@toast-ui/editor/dist/i18n/ko-kr";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import { Editor as TuiEditor, EditorProps } from "@toast-ui/react-editor";
+import { forwardRef } from "react";
 
-export type EditorProps = Omit<
-  TuiEditorProps,
-  | "previewStyle"
-  | "previewHighlight"
-  | "initialEditType"
-  | "language"
-  | "toolbarItems"
-  | "usageStatistics"
-  | "useCommandShortcut"
-  | "plugins"
->;
+interface Props extends EditorProps {
+  content: string;
+  editorRef: React.MutableRefObject<any>;
+}
 
 const toolbarItems = [
   ["heading", "bold", "italic", "strike"],
   ["hr"],
   ["ul", "ol", "task"],
   ["table", "link"],
-  ["code", "codeblock"],
+  ["image"],
+  ["code"],
+  ["scrollSync"],
 ];
 
 // eslint-disable-next-line react/display-name
-const Editor = forwardRef<TuiEditor, EditorProps>((props, ref) => {
+const Editor = forwardRef(({ content = "", editorRef, ...rest }: Props) => {
   return (
-    <TuiEditor
-      ref={ref}
-      previewStyle="tab"
-      previewHighlight={true}
-      initialEditType="wysiwyg"
-      language="ko-KR"
-      toolbarItems={toolbarItems}
-      usageStatistics={false}
-      useCommandShortcut={false}
-      plugins={[colorSyntax]}
-      {...props}
-    />
+    <>
+      {editorRef && (
+        <TuiEditor
+          ref={editorRef}
+          initialValue={content || " "}
+          initialEditType="wysiwyg"
+          previewStyle={"tab"}
+          hideModeSwitch={true}
+          theme={""}
+          usageStatistics={false}
+          toolbarItems={toolbarItems}
+          useCommandShortcut={true}
+          plugins={[colorSyntax]}
+          {...rest}
+        />
+      )}
+    </>
   );
 });
 
-export default memo(Editor);
+export default Editor;
