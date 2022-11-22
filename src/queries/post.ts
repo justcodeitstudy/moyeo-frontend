@@ -1,11 +1,15 @@
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { postKeys } from "../constants/queryKeys";
-import { getPost, getPostMe, postPost } from "../api/post";
+import { getPost, getPostMe, getPostWithId, postPost } from "../api/post";
 import { useRouter } from "next/router";
 import { PostRequest } from "../models/post";
 
 export const useGetPostMe = () => {
   return useQuery(postKeys.postMe, getPostMe, {});
+};
+
+export const useGetPostWithId = (id: number) => {
+  return useQuery(postKeys.postId(id), () => getPostWithId(id));
 };
 
 export const useInfiniteGetPost = () => {

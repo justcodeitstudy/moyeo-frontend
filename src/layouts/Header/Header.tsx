@@ -19,7 +19,7 @@ const Popover = dynamic(
 );
 
 const Header = () => {
-  const isLogin = useLoginStatus();
+  const { isLogin } = useLoginStatus();
   const [hasMounted, setHasMounted] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const router = useRouter();
@@ -45,7 +45,7 @@ const Header = () => {
     setHasMounted(true);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     logoutMutate();
   };
 
@@ -145,11 +145,17 @@ const Header = () => {
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
         >
-          <OptionUl>
-            <li onClick={handleMyPageButtonClick}>마이페이지</li>
-            <li onClick={handleWriteButtonClick}>모집 글 작성하기</li>
-            <li onClick={handleLogout}>로그아웃</li>
-          </OptionUl>
+          {isLogin ? (
+            <OptionUl>
+              <li onClick={handleMyPageButtonClick}>마이페이지</li>
+              <li onClick={handleWriteButtonClick}>모집 글 작성하기</li>
+              <li onClick={handleLogout}>로그아웃</li>
+            </OptionUl>
+          ) : (
+            <OptionUl>
+              <li onClick={handleLoginClick}>로그인</li>
+            </OptionUl>
+          )}
         </Popover>
       </MobileControlBox>
     </StyledHeader>

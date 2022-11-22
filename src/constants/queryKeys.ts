@@ -9,6 +9,7 @@ export const postKeys = {
   post: ["post"],
   postMe: ["postMe"],
   postWithQuery: (query: ParsedUrlQuery) => ["post", query],
+  postId: (id: number) => ["post", id],
 };
 
 export const skillKeys = {

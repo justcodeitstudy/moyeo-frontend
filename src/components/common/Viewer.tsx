@@ -1,10 +1,15 @@
-import React, { memo } from "react";
-import { Viewer as TuiViewer, ViewerProps } from "@toast-ui/react-editor";
-
+import React from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { Viewer as TuiViewer } from "@toast-ui/react-editor";
 
-const Viewer = (props: ViewerProps) => {
-  return <TuiViewer {...props} />;
+interface Props {
+  content: string;
+}
+
+const Viewer = ({ content = "" }: Props) => {
+  return (
+    <>{content && <TuiViewer initialValue={content || ""} plugins={[]} />}</>
+  );
 };
 
-export default memo(Viewer);
+export default Viewer;

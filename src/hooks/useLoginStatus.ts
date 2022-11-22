@@ -13,5 +13,5 @@ export const useLoginStatus = () => {
     }
   }, []);
 
-  return isLogin;
+  return { isLogin, setIsLogin };
 };

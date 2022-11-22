@@ -15,6 +15,9 @@ import {
 import { usePost } from "../../queries/post";
 import { useGetSkill } from "../../queries/skill";
 import { GetSkillRes } from "../../models/skill";
+import { useRouter } from "next/router";
+import { MODAL_TYPES } from "../common/Modal";
+import useModal from "../../hooks/useModal";
 
 const Editor = dynamic(() => import("../common/Editor"), {
   ssr: false,
@@ -52,18 +55,21 @@ interface PostValues {
   skillIds: GetSkillRes[];
 }
 
+const regex = /[^0-9]/g;
 const { Option } = Select;
 
 const PostForm = () => {
+  const router = useRouter();
   const { data: skills } = useGetSkill();
   const { mutate: postMutate } = usePost();
+  const { open } = useModal();
   const [optionList, setOptionList] = useState(skills);
 
   useEffect(() => {
     setOptionList(skills);
   }, [skills]);
 
-  const { values, setFieldValue, handleSubmit, submitForm, handleChange } =
+  const { values, setFieldValue, submitForm, handleChange } =
     useFormik<PostValues>({
       initialValues: {
         title: "",
@@ -77,25 +83,7 @@ const PostForm = () => {
         recruitPeopleNum: "",
       },
       onSubmit: (values) => {
-        handleRegisterButton();
-        const {
-          title,
-          content,
-          postType,
-          progressType,
-          contactInfo,
-          skillIds,
-          recruitmentList,
-        } = values;
-        postMutate({
-          title,
-          content,
-          postType: post[postType],
-          progressType: progress[progressType],
-          contactInfo,
-          skillIds: skillIds.map((el) => el.id),
-          recruitmentList,
-        });
+        confirmPost(values);
       },
     });
 
@@ -149,6 +137,7 @@ const PostForm = () => {
     const editorIns = editorRef?.current?.getInstance();
     const contentMark = editorIns.getMarkdown();
     setFieldValue("content", contentMark);
+    submitForm();
   };
 
   const handleSelectChange = (value: string) => {
@@ -193,8 +182,66 @@ const PostForm = () => {
     setOptionList(skills?.filter(({ name }) => name.includes(inputValue)));
   };
 
+  const cancelPost = () => {
+    return open({
+      modalType: MODAL_TYPES.confirm,
+      modalProps: {
+        title: "잠깐, 뒤로 가실 건가요?",
+        content:
+          "지금까지 작성된 글이 모두 사라져요!\n" + "그래도 뒤로 가시겠어요?",
+        confirmText: "예",
+        cancelText: "아니요",
+        onConfirm: () => router.back(),
+      },
+    });
+  };
+
+  const confirmPost = (values: PostValues) => {
+    return open({
+      modalType: MODAL_TYPES.confirm,
+      modalProps: {
+        title: "모집을 등록할까요?",
+
+        confirmText: "예",
+        cancelText: "아니요",
+        onConfirm: () => {
+          const {
+            title,
+            content,
+            postType,
+            progressType,
+            contactInfo,
+            skillIds,
+            recruitmentList,
+          } = values;
+          postMutate(
+            {
+              title,
+              content,
+              postType: post[postType],
+              progressType: progress[progressType],
+              contactInfo,
+              skillIds: skillIds.map((el) => el.id),
+              recruitmentList: recruitmentList.map((el) => {
+                el.recruitPeopleNum = parseInt(
+                  String(el.recruitPeopleNum).replace(regex, ""),
+                );
+                return el;
+              }),
+            },
+            {
+              onSuccess: () => {
+                router.push("/");
+              },
+            },
+          );
+        },
+      },
+    });
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <TitleContainer>
         <Image
           src="/moyomi_01.svg"
@@ -322,14 +369,18 @@ const PostForm = () => {
       />
       <Editor editorRef={editorRef} content={values.content} />
       <ButtonContainer>
-        <PostButton color="general" variants="filled">
+        <PostButton color="general" variants="filled" onClick={cancelPost}>
           취소
         </PostButton>
-        <PostButton type="submit" color="primary" onClick={submitForm}>
+        <PostButton
+          type="submit"
+          color="primary"
+          onClick={handleRegisterButton}
+        >
           모집 등록
         </PostButton>
       </ButtonContainer>
-    </form>
+    </>
   );
 };
 

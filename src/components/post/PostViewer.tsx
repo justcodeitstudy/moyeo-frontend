@@ -4,13 +4,20 @@ import styled, { css } from "styled-components";
 import { IconButton } from "jci-moyeo-design-system";
 import Avatar from "components/common/Avatar";
 import SkillItem from "./SkillItem";
+import { useGetPostWithId } from "../../queries/post";
+import { useRouter } from "next/router";
+import { formatter } from "../../utils/formatter";
+import { useGetSkill } from "../../queries/skill";
 
 const Viewer = dynamic(() => import("../common/Viewer"), {
   ssr: false,
 });
 
 const PostViewer = () => {
+  const { data: skills } = useGetSkill();
+  const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
+  const { data } = useGetPostWithId(Number(router.query.id));
 
   useEffect(() => {
     setHasMounted(true);
@@ -22,9 +29,16 @@ const PostViewer = () => {
     <PageContainer>
       <TitleSection>
         <TitleContainer>
-          <Title>온라인 모각코 인원 모집합니다!</Title>
+          <Title>{data?.data.title}</Title>
           <ButtonContainer>
-            <IconButton icon="checkInCircle" color="primary" />
+            <IconButton
+              icon="checkInCircle"
+              color={
+                data?.data.recruitStatus === "RECRUITING"
+                  ? "general"
+                  : "primary"
+              }
+            />
             <IconButton icon="write" />
             <IconButton icon="delete" />
           </ButtonContainer>
@@ -33,7 +47,7 @@ const PostViewer = () => {
           <SubTitleLeft>
             <Avatar id="" />
             <Nickname>닉네임</Nickname>
-            <Date>2022.10.18</Date>
+            <Date>{data?.data && formatter.date(data?.data.createdAt)}</Date>
           </SubTitleLeft>
           <SubTitleRight>
             <ViewCount>조회 33</ViewCount>
@@ -45,7 +59,7 @@ const PostViewer = () => {
           <GridContainer>
             <GridItem>
               <Label>모집 구분</Label>
-              <Content width="192px">스터디</Content>
+              <Content width="192px">{data?.data.postType.value}</Content>
             </GridItem>
             <GridItem>
               <Label>진행 방식</Label>
@@ -57,8 +71,13 @@ const PostViewer = () => {
               <Label marginTop="8px">모집 분야</Label>
               <Content width="192px">
                 <RecruitmentContainer>
-                  <RecruitmentType>디자이너 1명</RecruitmentType>
-                  <RecruitmentType>프론트엔드 1명</RecruitmentType>
+                  {data?.data.recruitmentList.map(
+                    ({ id, recruitType, recruitPeopleNum }) => (
+                      <RecruitmentType key={id}>
+                        {`${recruitType} ${recruitPeopleNum}명`}
+                      </RecruitmentType>
+                    ),
+                  )}
                 </RecruitmentContainer>
               </Content>
             </GridItem>
@@ -70,12 +89,16 @@ const PostViewer = () => {
           <SkillContainer>
             <Label>기술 태그</Label>
             <SkillItemContainer>
-              <SkillItem name="" src="" />
+              {skills
+                ?.filter((skill) => data?.data.skillIds.includes(skill.id))
+                .map((el) => (
+                  <SkillItem key={el.id} name={el.name} src={el.imageUrl} />
+                ))}
             </SkillItemContainer>
           </SkillContainer>
         </Information>
         <Divider />
-        <Viewer />
+        {data?.data.content && <Viewer content={data?.data.content} />}
       </InformationSection>
     </PageContainer>
   );

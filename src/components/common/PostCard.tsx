@@ -1,4 +1,5 @@
 import { Card } from "jci-moyeo-design-system";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -6,16 +7,19 @@ interface PostCardProps {
   title?: React.ReactNode;
   content?: string;
   footer?: React.ReactNode;
+  postId?: number;
 }
 
-export const PostCard = ({ title, content, footer }: PostCardProps) => {
+export const PostCard = ({ title, content, footer, postId }: PostCardProps) => {
   return (
-    <Card>
-      <StyledCardTitle>{title}</StyledCardTitle>
-      <StyledCardContent>{content}</StyledCardContent>
-      <Divider />
-      <StyledCardFooter>{footer}</StyledCardFooter>
-    </Card>
+    <Link href={`/post/${postId}`}>
+      <Card>
+        <StyledCardTitle>{title}</StyledCardTitle>
+        <StyledCardContent>{content}</StyledCardContent>
+        <Divider />
+        <StyledCardFooter>{footer}</StyledCardFooter>
+      </Card>
+    </Link>
   );
 };
 

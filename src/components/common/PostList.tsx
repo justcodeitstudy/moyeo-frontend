@@ -20,7 +20,7 @@ export interface PostListProps {
 export const PostList = ({ postList, myPageScrap }: PostListProps) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const isLogin = useLoginStatus();
+  const { isLogin } = useLoginStatus();
   const {
     isLoginModalOpen,
     handleLoginClick,
@@ -34,7 +34,12 @@ export const PostList = ({ postList, myPageScrap }: PostListProps) => {
     return queryClient.invalidateQueries(postKeys.postWithQuery(router.query));
   };
 
-  const handleScraps = (postId: string, isScrapped: boolean) => {
+  const handleScraps = (
+    e: React.MouseEvent<SVGElement, MouseEvent>,
+    postId: string,
+    isScrapped: boolean,
+  ) => {
+    e.stopPropagation();
     if (!isLogin) {
       handleLoginClick();
     }
@@ -78,7 +83,7 @@ export const PostList = ({ postList, myPageScrap }: PostListProps) => {
                       ? Theme.colors.primary[500]
                       : Theme.colors.general.white["200"]
                   }
-                  onClick={() => handleScraps(String(postId), isScrapped)}
+                  onClick={(e) => handleScraps(e, String(postId), isScrapped)}
                 />
               )}
             </>
@@ -90,7 +95,12 @@ export const PostList = ({ postList, myPageScrap }: PostListProps) => {
 
           return (
             <Grid.Item key={postId}>
-              <PostCard title={title} content={content} footer={footer} />
+              <PostCard
+                title={title}
+                content={content}
+                footer={footer}
+                postId={postId}
+              />
             </Grid.Item>
           );
         },

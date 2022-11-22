@@ -15,7 +15,10 @@ const Kakao: NextPage = () => {
           params: { code },
         });
         const token = response.headers["x-moyeo-auth-token"];
-        CustomCookies.setCookies("accessToken", token, { path: "/" });
+        CustomCookies.setCookies("accessToken", token, {
+          path: "/",
+          maxAge: 3600 * 2,
+        });
         await router.replace("/");
       } catch (e) {
         // TODO 실패시

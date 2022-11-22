@@ -2,6 +2,7 @@ import client from "./index";
 import {
   Content,
   GetPostRequest,
+  GetPostRequestWithId,
   GetPostResponse,
   PostRequest,
 } from "../models/post";
@@ -25,6 +26,12 @@ export const getPost = async (
 
 export const getPostMe = (): Promise<AxiosResponse<Content[]>> => {
   return client.get(`/post/me`);
+};
+
+export const getPostWithId = (
+  id: number,
+): Promise<AxiosResponse<GetPostRequestWithId>> => {
+  return client.get(`/post/${id}`);
 };
 
 export const postPost = (data: PostRequest) => {

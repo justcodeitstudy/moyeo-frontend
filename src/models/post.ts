@@ -54,6 +54,17 @@ export interface GetPostRequest {
   sort?: string;
 }
 
+export interface GetPostRequestWithId
+  extends Omit<PostRequest, "userId" | "postType"> {
+  id: number;
+  recruitStatus: "RECRUITING" | "COMPLETE" | "FINISH";
+  createdAt: string;
+  postType: {
+    value: string;
+    engWord: string;
+  };
+}
+
 export interface PostRequest {
   title: string;
   content: string;
